@@ -30,7 +30,7 @@ class GameState:
 class Window:
     def __init__(self):
         # Create the window, saving it to a variable.
-        self.window = pygame.display.set_mode((350, 250), pygame.RESIZABLE)
+        self.window = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
         pygame.display.set_caption("Example resizable window")
         self.font = pygame.font.SysFont(None, 24)
 
