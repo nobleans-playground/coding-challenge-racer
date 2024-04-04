@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import asyncio
 from math import cos, sin, degrees
 
 import pygame
@@ -65,10 +66,8 @@ class Window:
             pygame.Color('blue'))
         self.window.blit(text, (20, 40))
 
-        pygame.display.update()
 
-
-def main():
+async def main():
     pygame.init()
     window = Window()
     game_state = GameState()
@@ -89,10 +88,12 @@ def main():
 
         clock.tick(60)
         window.draw(game_state, clock)
+        pygame.display.update()
+        await asyncio.sleep(0)  # Very important, and keep it 0
 
 
 if __name__ == '__main__':
     try:
-        main()
+        asyncio.run(main())
     except KeyboardInterrupt:
         pygame.quit()
