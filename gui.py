@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from math import cos, sin, pi, degrees
+from math import cos, sin, degrees
 
 import pygame
 
@@ -18,12 +18,12 @@ class GameState:
             self.position = (self.position[0], self.position[1], self.position[2] - angle)
         if keys[pygame.K_UP]:
             self.position = (
-            self.position[0] + forward * cos(self.position[2]), self.position[1] + forward * sin(self.position[2]),
-            self.position[2])
+                self.position[0] + forward * cos(self.position[2]), self.position[1] + forward * sin(self.position[2]),
+                self.position[2])
         if keys[pygame.K_DOWN]:
             self.position = (
-            self.position[0] - forward * cos(self.position[2]), self.position[1] - forward * sin(self.position[2]),
-            self.position[2])
+                self.position[0] - forward * cos(self.position[2]), self.position[1] - forward * sin(self.position[2]),
+                self.position[2])
 
 
 class Window:
@@ -32,6 +32,9 @@ class Window:
         self.window = pygame.display.set_mode((350, 250), pygame.RESIZABLE)
         pygame.display.set_caption("Example resizable window")
         self.font = pygame.font.SysFont(None, 24)
+
+        self.car_image = pygame.image.load("car.png").convert_alpha()
+        self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
     def draw(self, game_state, clock):
         self.window.fill((255, 255, 255))
@@ -44,12 +47,13 @@ class Window:
         # Draw a car
         car_surface = pygame.Surface([100, 200], pygame.SRCALPHA)
         car_surface.fill((0, 0, 0))
-        pygame.draw.rect(car_surface, (100, 0, 0), (10, 20, 20, 20))
-        text = self.font.render('player1}', True, pygame.Color('blue'))
+        car_surface.blit(self.car_image, (0, 0))
+        text = self.font.render('player1}', True, pygame.Color('yellow'))
         car_surface.blit(text, (20, 20))
 
         car_rotated = pygame.transform.rotate(car_surface, degrees(game_state.position[2]) - 90)
-        car_rect = car_rotated.get_rect(center=(game_state.position[0], self.window.get_height() - game_state.position[1]))
+        car_rect = car_rotated.get_rect(
+            center=(game_state.position[0], self.window.get_height() - game_state.position[1]))
         self.window.blit(car_rotated, (car_rect.x, car_rect.y))
 
         # Draw the UI
