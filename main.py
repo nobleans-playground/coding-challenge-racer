@@ -3,6 +3,7 @@ import asyncio
 from math import cos, sin, degrees
 
 import pygame
+import pygame_menu
 
 
 class GameState:
@@ -37,6 +38,16 @@ class Window:
         self.car_image = pygame.image.load("car.png").convert_alpha()
         self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
+        self.menu = pygame_menu.Menu('Racer', 300, self.window.get_height())
+
+        self.menu.add.text_input('Name :', default='John Doe')
+        self.menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)])
+        self.menu.add.button('Play')
+        self.menu.add.button('Quit', pygame_menu.events.EXIT)
+
+    def update(self, events):
+        self.menu.update(events)
+
     def draw(self, game_state, clock):
         self.window.fill((255, 255, 255))
 
@@ -66,34 +77,43 @@ class Window:
             pygame.Color('blue'))
         self.window.blit(text, (20, 40))
 
+        self.menu.draw(self.window)
 
-async def main():
+
+class App:
+    def __init__(self):
+        self.window = Window()
+        self.game_state = GameState()
+        self.clock = pygame.time.Clock()
+
+    async def mainloop(self):
+        run = True
+        while run:
+            events = pygame.event.get()
+
+            self.window.update(events)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    return
+
+            self.game_state.update()
+
+            self.clock.tick(60)
+            self.window.draw(self.game_state, self.clock)
+            pygame.display.update()
+            await asyncio.sleep(0)  # Very important, and keep it 0
+
+
+def main():
     pygame.init()
-    window = Window()
-    game_state = GameState()
-    clock = pygame.time.Clock()
-    run = True
-    while run:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                return
-
-            # if event.type == pygame.VIDEORESIZE:
-            #     # There's some code to add back window content here.
-            #     surface = pygame.display.set_mode((event.w, event.h),
-            #                                       pygame.RESIZABLE)
-
-        game_state.update()
-
-        clock.tick(60)
-        window.draw(game_state, clock)
-        pygame.display.update()
-        await asyncio.sleep(0)  # Very important, and keep it 0
+    app = App()
+    asyncio.run(app.mainloop())
 
 
 if __name__ == '__main__':
     try:
-        asyncio.run(main())
+        main()
     except KeyboardInterrupt:
         pygame.quit()
