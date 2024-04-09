@@ -2,32 +2,7 @@ import math
 from math import cos, sin
 
 import pytest
-
-
-class Vector:
-    """A 2d vector"""
-
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def __add__(self, other):
-        x = self.x + other.x
-        y = self.y + other.y
-        return Vector(x, y)
-
-    def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
-
-    def __getitem__(self, item):
-        if item == 0:
-            return self.x
-        if item == 1:
-            return self.y
-        raise IndexError()
-
-    def __repr__(self):
-        return f"Vector({self.x}, {self.y})"
+from pygame.math import Vector2
 
 
 class Rotation:
@@ -48,10 +23,10 @@ class Rotation:
     def angle(self):
         return math.atan2(self.rows[1][0], self.rows[0][0])
 
-    def __mul__(self, other: Vector):
+    def __mul__(self, other: Vector2):
         x = self.rows[0][0] * other.x + self.rows[0][1] * other.y
         y = self.rows[1][0] * other.x + self.rows[1][1] * other.y
-        return Vector(x, y)
+        return Vector2(x, y)
 
     def __repr__(self):
         return f"Matrix2x2({self.rows})"
@@ -60,19 +35,19 @@ class Rotation:
 class Transform:
     """Rigid 2d transforms with only translation and rotation"""
 
-    def __init__(self, M: Rotation, p: Vector):
+    def __init__(self, M: Rotation, p: Vector2):
         self.M = M
         self.p = p
 
 
 def test_vector_add():
-    a = Vector(1, 2)
-    b = Vector(3, 4)
+    a = Vector2(1, 2)
+    b = Vector2(3, 4)
     c = a + b
     assert c.x == 4
     assert c.y == 6
-    assert c == Vector(4, 6)
-    assert c != Vector(9, 9)
+    assert c == Vector2(4, 6)
+    assert c != Vector2(9, 9)
 
 
 def test_matrix2x2_angle():
@@ -89,14 +64,14 @@ def test_matrix2x2_angle():
 
 def test_matrix2x2_rotate():
     m = Rotation(0)
-    a = Vector(1, 2)
+    a = Vector2(1, 2)
     b = m * a
-    assert b == Vector(1, 2)
+    assert b == Vector2(1, 2)
 
 
 def test_matrix2x2_rotate_90():
     m = Rotation(math.pi / 2)
-    a = Vector(1, 2)
+    a = Vector2(1, 2)
     b = m * a
     assert b[0] == pytest.approx(-2)
     assert b[1] == pytest.approx(1)
