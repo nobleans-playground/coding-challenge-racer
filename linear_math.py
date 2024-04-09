@@ -24,8 +24,8 @@ class Rotation:
         return math.atan2(self.rows[1][0], self.rows[0][0])
 
     def __mul__(self, other: Vector2):
-        x = self.rows[0][0] * other.x + self.rows[0][1] * other.y
-        y = self.rows[1][0] * other.x + self.rows[1][1] * other.y
+        x = self.rows[0] * other
+        y = self.rows[1] * other
         return Vector2(x, y)
 
     def __repr__(self):

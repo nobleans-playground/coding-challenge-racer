@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
+
+
 import asyncio
 from math import cos, sin, degrees
 
 import pygame
-import pygame_menu
+import pygame_widgets
+from pygame_widgets.button import Button
 
 
 class GameState:
@@ -38,15 +41,36 @@ class Window:
         self.car_image = pygame.image.load("car.png").convert_alpha()
         self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
-        self.menu = pygame_menu.Menu('Racer', 300, self.window.get_height())
+        # self.menu = pygame_menu.Menu('Racer', 300, self.window.get_height())
+        #
+        # self.menu.add.text_input('Name :', default='John Doe')
+        # self.menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)])
+        # self.menu.add.button('Play')
+        # self.menu.add.button('Quit', pygame_menu.events.EXIT)
 
-        self.menu.add.text_input('Name :', default='John Doe')
-        self.menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)])
-        self.menu.add.button('Play')
-        self.menu.add.button('Quit', pygame_menu.events.EXIT)
+        # self.manager = pygame_gui.UIManager((800, 600))
+        # hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 275), (100, 50)),
+        #                                             text='Say Hello',
+        #                                             manager=self.manager)
 
-    def update(self, events):
-        self.menu.update(events)
+        button = Button(
+            # Mandatory Parameters
+            self.window,  # Surface to place button on
+            100,  # X-coordinate of top left corner
+            100,  # Y-coordinate of top left corner
+            300,  # Width
+            150,  # Height
+
+            # Optional Parameters
+            text='Hello',  # Text to display
+            fontSize=50,  # Size of font
+            margin=20,  # Minimum distance between text/image and edge of button
+            inactiveColour=(200, 50, 0),  # Colour of button when not being interacted with
+            hoverColour=(150, 0, 0),  # Colour of button when being hovered over
+            pressedColour=(0, 200, 20),  # Colour of button when being clicked
+            radius=20,  # Radius of border corners (leave empty for not curved)
+            onClick=lambda: print('Click')  # Function to call when clicked on
+        )
 
     def draw(self, game_state, clock):
         self.window.fill((255, 255, 255))
@@ -77,7 +101,8 @@ class Window:
             pygame.Color('blue'))
         self.window.blit(text, (20, 40))
 
-        self.menu.draw(self.window)
+        # self.menu.draw(self.window)
+        # self.manager.draw_ui(self.window)
 
 
 class App:
@@ -90,18 +115,18 @@ class App:
         run = True
         while run:
             events = pygame.event.get()
-
-            self.window.update(events)
-
-            for event in pygame.event.get():
+            for event in events:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     return
 
+            # Update the game
             self.game_state.update()
 
+            # Draw the game
             self.clock.tick(60)
             self.window.draw(self.game_state, self.clock)
+            pygame_widgets.update(events)
             pygame.display.update()
             await asyncio.sleep(0)  # Very important, and keep it 0
 
@@ -112,8 +137,10 @@ def main():
     asyncio.run(app.mainloop())
 
 
+print('here')
 if __name__ == '__main__':
     try:
+        print('now here')
         main()
     except KeyboardInterrupt:
         pygame.quit()
