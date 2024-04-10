@@ -41,19 +41,7 @@ class Window:
         self.car_image = pygame.image.load("car.png").convert_alpha()
         self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
-        # self.menu = pygame_menu.Menu('Racer', 300, self.window.get_height())
-        #
-        # self.menu.add.text_input('Name :', default='John Doe')
-        # self.menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)])
-        # self.menu.add.button('Play')
-        # self.menu.add.button('Quit', pygame_menu.events.EXIT)
-
-        # self.manager = pygame_gui.UIManager((800, 600))
-        # hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 275), (100, 50)),
-        #                                             text='Say Hello',
-        #                                             manager=self.manager)
-
-        button = Button(
+        self.button = Button(
             # Mandatory Parameters
             self.window,  # Surface to place button on
             100,  # X-coordinate of top left corner
@@ -101,9 +89,6 @@ class Window:
             pygame.Color('blue'))
         self.window.blit(text, (20, 40))
 
-        # self.menu.draw(self.window)
-        # self.manager.draw_ui(self.window)
-
 
 class App:
     def __init__(self):
@@ -134,13 +119,13 @@ class App:
 def main():
     pygame.init()
     app = App()
+    print('Starting the main loop')
     asyncio.run(app.mainloop())
 
 
 print('here')
 if __name__ == '__main__':
     try:
-        print('now here')
         main()
     except KeyboardInterrupt:
         pygame.quit()
