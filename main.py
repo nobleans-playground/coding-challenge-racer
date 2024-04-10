@@ -6,12 +6,32 @@ from math import cos, sin, degrees
 
 import pygame
 import pygame_widgets
+from pygame import Rect
+from pygame.math import Vector2
 from pygame_widgets.button import Button
+
+from linear_math import Transform, Rotation
+
+
+class Track:
+    def __init__(self, background: str, resolution: float):
+        self.background = pygame.image.load(background).convert_alpha()
+        self.resolution = resolution  # meter/pixel
+
+    @property
+    def size(self):
+        """Track size (x, y) in meters"""
+        return Vector2(self.background.get_size()) * self.resolution
 
 
 class GameState:
     def __init__(self):
         self.position = (100.0, 100.0, 0.0)
+        track1 = Track(
+            background='track.jpg',
+            resolution=0.4  # meter/pixel
+        )
+        self.track = track1
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -41,6 +61,9 @@ class Window:
         self.car_image = pygame.image.load("car.png").convert_alpha()
         self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
+        self.camera_pos = Transform(M=Rotation(0), p=Vector2())  # meters
+        self.camera_resolution = 10  # meter/pixel
+
         self.button = Button(
             # Mandatory Parameters
             self.window,  # Surface to place button on
@@ -60,8 +83,21 @@ class Window:
             onClick=lambda: print('Click')  # Function to call when clicked on
         )
 
-    def draw(self, game_state, clock):
-        self.window.fill((255, 255, 255))
+    def update(self, game_state: GameState):
+        x, y = pygame.mouse.get_pos()
+        width, height = self.window.get_size()
+        self.camera_pos.p = Vector2(x, height - y)
+        self.camera_pos.p.x /= width
+        self.camera_pos.p.y /= height
+        self.camera_pos.p.x *= game_state.track.size.x
+        self.camera_pos.p.y *= game_state.track.size.y
+
+    def draw(self, game_state: GameState, clock):
+        self.window.fill((0, 0, 0))
+
+        viewport_rect = Rect(0, 0, self.window.get_width() - 200, self.window.get_height())
+        viewport = self.window.subsurface(viewport_rect)
+        viewport.fill((40, 0, 0))
 
         # Draw a red rectangle that resizes with the window.
         pygame.draw.rect(self.window, (200, 0, 0), (self.window.get_width() / 3,
@@ -72,7 +108,7 @@ class Window:
         car_surface = pygame.Surface([100, 200], pygame.SRCALPHA)
         car_surface.fill((0, 0, 0))
         car_surface.blit(self.car_image, (0, 0))
-        text = self.font.render('player1}', True, pygame.Color('yellow'))
+        text = self.font.render('player1', True, pygame.Color('yellow'))
         car_surface.blit(text, (20, 20))
 
         car_rotated = pygame.transform.rotate(car_surface, degrees(game_state.position[2]) - 90)
@@ -88,6 +124,11 @@ class Window:
             f'pos: {game_state.position[0]:.1f} {game_state.position[1]:.1f} {game_state.position[2]:.1f}', True,
             pygame.Color('blue'))
         self.window.blit(text, (20, 40))
+
+        text = self.font.render(
+            f'camera: {self.camera_pos.p.x:.1f} {self.camera_pos.p.y:.1f} {self.camera_pos.M.angle:.1f}', True,
+            pygame.Color('blue'))
+        self.window.blit(text, (20, 60))
 
 
 class App:
@@ -107,6 +148,7 @@ class App:
 
             # Update the game
             self.game_state.update()
+            self.window.update(self.game_state)
 
             # Draw the game
             self.clock.tick(60)
