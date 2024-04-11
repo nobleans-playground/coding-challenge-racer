@@ -49,3 +49,9 @@ def test_matrix2x2_transpose():
     assert mt[0, 1] == 1
     assert mt[1, 0] == -1
     assert mt[1, 1] == 0
+
+def test_transform_mul():
+    m = Rotation.fromangle(0)
+    t = Vector2(1, 2)
+    tr = m * t
+    assert tr == Vector2(1, 2)

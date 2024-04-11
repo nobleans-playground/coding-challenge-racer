@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+from os import environ
+
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
+
 from argparse import ArgumentParser, FileType
 from xml.etree import ElementTree
 
@@ -18,16 +22,24 @@ def get_coordinates(path):
 
 
 def main(svg, resolution):
+    print('# Path: coding-challenge-racer/extract_svg_path')
+    print('import os.path')
+    print()
+    print('import pygame')
+    print()
     print(f"name = '{svg.name}'")
     print(f'resolution = {resolution}')
+    print("background = pygame.image.load(os.path.splitext(__file__)[0] + '.jpg')")
     print('lines = [')
     tree = ElementTree.parse(svg)
     root = tree.getroot()
+    height = float(root.attrib['height'])
     for child in root:
         if child.tag == '{http://www.w3.org/2000/svg}path':
             d = child.attrib['d']
             path = parse_path(d)
             for c in get_coordinates(path):
+                c.y = height - c.y
                 c *= resolution
                 decimals = 13
                 c.x = round(c.x, decimals)

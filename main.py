@@ -11,7 +11,7 @@ from pygame.math import Vector2
 from pygame_widgets.button import Button
 
 import track1
-from linear_math import Transform, Rotation
+from linear_math import Transform
 from track import Track
 
 
@@ -48,7 +48,7 @@ class Window:
         self.car_image = pygame.image.load("car.png").convert_alpha()
         self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
-        self.camera_pos = Transform(M=Rotation(0), p=Vector2())  # meters
+        self.camera_pos = Transform()  # meters
         self.camera_resolution = 10  # meter/pixel
 
         self.button = Button(
@@ -86,7 +86,15 @@ class Window:
         viewport = self.window.subsurface(viewport_rect)
         viewport.fill((40, 0, 0))
 
-        pygame.draw.lines(viewport, (255, 255, 255), True, game_state.track.lines)
+        # Draw the track
+        # First, convert the track to the camera space
+        map_to_camera = self.camera_pos.inverse()
+        lines = [map_to_camera * p for p in game_state.track.lines]
+        # fix lines resolution
+        lines = [p * self.camera_resolution for p in lines]
+        # to draw a line, the y axis is inverted
+        lines = [(p.x, self.window.get_height() - p.y) for p in lines]
+        pygame.draw.lines(viewport, (255, 255, 255), True, lines)
 
         # Draw a red rectangle that resizes with the window.
         pygame.draw.rect(self.window, (200, 0, 0), (self.window.get_width() / 3,

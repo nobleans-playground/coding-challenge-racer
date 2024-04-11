@@ -41,10 +41,13 @@ class Rotation:
 class Transform:
     """Rigid 2d transforms with only translation and rotation"""
 
-    def __init__(self, M: Rotation, p: Vector2):
-        self.M = M
-        self.p = p
+    def __init__(self, M: Rotation = None, p: Vector2 = None):
+        self.M = M if M is not None else Rotation.fromangle(0)
+        self.p = p if p is not None else Vector2()
 
     def inverse(self):
         M = self.M.transpose()
         return Transform(M, M * -self.p)
+
+    def __mul__(self, other: Vector2):
+        return self.M * other + self.p
