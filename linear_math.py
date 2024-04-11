@@ -7,8 +7,12 @@ from pygame.math import Vector2
 class Rotation:
     """2x2 rotation matrix"""
 
-    def __init__(self, angle):
-        self.rows = ((cos(angle), -sin(angle)), (sin(angle), cos(angle)))
+    def __init__(self, xx, xy, yx, yy):
+        self.rows = (Vector2(xx, xy), Vector2(yx, yy))
+
+    @classmethod
+    def fromangle(self, angle):
+        return Rotation(cos(angle), -sin(angle), sin(angle), cos(angle))
 
     def __getitem__(self, item):
         if isinstance(item, tuple):
@@ -21,6 +25,9 @@ class Rotation:
     @property
     def angle(self):
         return math.atan2(self.rows[1][0], self.rows[0][0])
+
+    def transpose(self):
+        return Rotation(self.rows[0].x, self.rows[1].x, self.rows[0].y, self.rows[1].y)
 
     def __mul__(self, other: Vector2):
         x = self.rows[0] * other
@@ -37,3 +44,7 @@ class Transform:
     def __init__(self, M: Rotation, p: Vector2):
         self.M = M
         self.p = p
+
+    def inverse(self):
+        M = self.M.transpose()
+        return Transform(M, M * -self.p)
