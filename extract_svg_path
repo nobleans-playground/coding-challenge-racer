@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+from argparse import ArgumentParser, FileType
+from xml.etree import ElementTree
+
+from svg.path import parse_path
+
+
+def main(svg):
+    tree = ElementTree.parse(svg)
+    root = tree.getroot()
+    for child in root:
+        if child.tag == '{http://www.w3.org/2000/svg}path':
+            d = child.attrib['d']
+            path = parse_path(d)
+            for e in path:
+                print(e)
+
+
+if __name__ == '__main__':
+    parser = ArgumentParser()
+    parser.add_argument('svg', type=FileType())
+    args = parser.parse_args()
+    main(**vars(args))
