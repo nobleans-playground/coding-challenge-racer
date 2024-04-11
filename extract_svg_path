@@ -2,22 +2,43 @@
 from argparse import ArgumentParser, FileType
 from xml.etree import ElementTree
 
+from pygame.math import Vector2
 from svg.path import parse_path
 
 
-def main(svg):
+def complex_to_tuple(c):
+    return c.real, c.imag
+
+
+def get_coordinates(path):
+    for e in path:
+        start = Vector2(complex_to_tuple(e.start))
+        yield start
+    yield Vector2(complex_to_tuple(path[-1].end))
+
+
+def main(svg, resolution):
+    print(f"name = '{svg.name}'")
+    print(f'resolution = {resolution}')
+    print('lines = [')
     tree = ElementTree.parse(svg)
     root = tree.getroot()
     for child in root:
         if child.tag == '{http://www.w3.org/2000/svg}path':
             d = child.attrib['d']
             path = parse_path(d)
-            for e in path:
-                print(e)
+            for c in get_coordinates(path):
+                c *= resolution
+                decimals = 13
+                c.x = round(c.x, decimals)
+                c.y = round(c.y, decimals)
+                print(f'  {tuple(c)},')
+    print(']')
 
 
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('svg', type=FileType())
+    parser.add_argument('--resolution', type=float, default=0.1, help='Resolution of the path [m/pixel]')
     args = parser.parse_args()
     main(**vars(args))
