@@ -10,28 +10,15 @@ from pygame import Rect
 from pygame.math import Vector2
 from pygame_widgets.button import Button
 
+import track1
 from linear_math import Transform, Rotation
-
-
-class Track:
-    def __init__(self, background: str, resolution: float):
-        self.background = pygame.image.load(background).convert_alpha()
-        self.resolution = resolution  # meter/pixel
-
-    @property
-    def size(self):
-        """Track size (x, y) in meters"""
-        return Vector2(self.background.get_size()) * self.resolution
+from track import Track
 
 
 class GameState:
     def __init__(self):
         self.position = (100.0, 100.0, 0.0)
-        track1 = Track(
-            background='track.jpg',
-            resolution=0.4  # meter/pixel
-        )
-        self.track = track1
+        self.track = Track(track1)
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -98,6 +85,8 @@ class Window:
         viewport_rect = Rect(0, 0, self.window.get_width() - 200, self.window.get_height())
         viewport = self.window.subsurface(viewport_rect)
         viewport.fill((40, 0, 0))
+
+        pygame.draw.lines(viewport, (255, 255, 255), True, game_state.track.lines)
 
         # Draw a red rectangle that resizes with the window.
         pygame.draw.rect(self.window, (200, 0, 0), (self.window.get_width() / 3,
