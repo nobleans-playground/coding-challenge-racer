@@ -2,7 +2,7 @@
 
 
 import asyncio
-from math import cos, sin, degrees
+from math import degrees
 
 import pygame
 import pygame_widgets
@@ -11,31 +11,29 @@ from pygame.math import Vector2
 from pygame_widgets.button import Button
 
 import track1
-from linear_math import Transform
+from linear_math import Transform, Rotation
 from track import Track
 
 
 class GameState:
     def __init__(self):
-        self.position = (100.0, 100.0, 0.0)
+        self.position = Transform(Rotation.fromangle(0), Vector2(100.0, 100.0))
         self.track = Track(track1)
 
     def update(self):
         keys = pygame.key.get_pressed()
         forward = 1
         angle = 0.1
+        delta = Transform()
         if keys[pygame.K_LEFT]:
-            self.position = (self.position[0], self.position[1], self.position[2] + angle)
+            delta.M = Rotation.fromangle(angle)
         if keys[pygame.K_RIGHT]:
-            self.position = (self.position[0], self.position[1], self.position[2] - angle)
+            delta.M = Rotation.fromangle(-angle)
         if keys[pygame.K_UP]:
-            self.position = (
-                self.position[0] + forward * cos(self.position[2]), self.position[1] + forward * sin(self.position[2]),
-                self.position[2])
+            delta.p.x = forward
         if keys[pygame.K_DOWN]:
-            self.position = (
-                self.position[0] - forward * cos(self.position[2]), self.position[1] - forward * sin(self.position[2]),
-                self.position[2])
+            delta.p.x = -forward
+        self.position = self.position * delta
 
 
 class Window:
@@ -51,22 +49,25 @@ class Window:
         self.camera_pos = Transform()  # meters
         self.camera_resolution = 10  # meter/pixel
 
+        menu_width = 200
+        menu_rect = Rect(self.window.get_width() - menu_width, 0, menu_width, self.window.get_height())
+        menu = self.window.subsurface(menu_rect)
         self.button = Button(
             # Mandatory Parameters
-            self.window,  # Surface to place button on
-            100,  # X-coordinate of top left corner
-            100,  # Y-coordinate of top left corner
-            300,  # Width
-            150,  # Height
+            menu,  # Surface to place button on
+            0,  # X-coordinate of top left corner
+            0,  # Y-coordinate of top left corner
+            100,  # Width
+            50,  # Height
 
             # Optional Parameters
             text='Hello',  # Text to display
-            fontSize=50,  # Size of font
+            fontSize=24,  # Size of font
             margin=20,  # Minimum distance between text/image and edge of button
             inactiveColour=(200, 50, 0),  # Colour of button when not being interacted with
             hoverColour=(150, 0, 0),  # Colour of button when being hovered over
             pressedColour=(0, 200, 20),  # Colour of button when being clicked
-            radius=20,  # Radius of border corners (leave empty for not curved)
+            radius=5,  # Radius of border corners (leave empty for not curved)
             onClick=lambda: print('Click')  # Function to call when clicked on
         )
 
@@ -93,13 +94,8 @@ class Window:
         # fix lines resolution
         lines = [p * self.camera_resolution for p in lines]
         # to draw a line, the y axis is inverted
-        lines = [(p.x, self.window.get_height() - p.y) for p in lines]
+        lines = [Vector2(p.x, self.window.get_height() - p.y) for p in lines]
         pygame.draw.lines(viewport, (255, 255, 255), True, lines)
-
-        # Draw a red rectangle that resizes with the window.
-        pygame.draw.rect(self.window, (200, 0, 0), (self.window.get_width() / 3,
-                                                    self.window.get_height() / 3, self.window.get_width() / 3,
-                                                    self.window.get_height() / 3))
 
         # Draw a car
         car_surface = pygame.Surface([100, 200], pygame.SRCALPHA)
@@ -108,9 +104,9 @@ class Window:
         text = self.font.render('player1', True, pygame.Color('yellow'))
         car_surface.blit(text, (20, 20))
 
-        car_rotated = pygame.transform.rotate(car_surface, degrees(game_state.position[2]) - 90)
+        car_rotated = pygame.transform.rotate(car_surface, degrees(game_state.position.M.angle) - 90)
         car_rect = car_rotated.get_rect(
-            center=(game_state.position[0], self.window.get_height() - game_state.position[1]))
+            center=(game_state.position.p.x, self.window.get_height() - game_state.position.p.y))
         self.window.blit(car_rotated, (car_rect.x, car_rect.y))
 
         # Draw the UI
@@ -118,7 +114,7 @@ class Window:
         self.window.blit(text, (20, 20))
 
         text = self.font.render(
-            f'pos: {game_state.position[0]:.1f} {game_state.position[1]:.1f} {game_state.position[2]:.1f}', True,
+            f'pos: {game_state.position.p.x:.1f} {game_state.position.p.y:.1f} {game_state.position.M.angle:.1f}', True,
             pygame.Color('blue'))
         self.window.blit(text, (20, 40))
 

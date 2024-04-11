@@ -2,7 +2,7 @@ from math import pi
 
 import pytest
 
-from linear_math import Vector2, Rotation
+from linear_math import Vector2, Rotation, Transform
 
 
 def test_vector_add():
@@ -50,8 +50,21 @@ def test_matrix2x2_transpose():
     assert mt[1, 0] == -1
     assert mt[1, 1] == 0
 
-def test_transform_mul():
+
+def test_transform_mul_vector2():
     m = Rotation.fromangle(0)
     t = Vector2(1, 2)
     tr = m * t
     assert tr == Vector2(1, 2)
+
+
+def test_transform_mul_transform():
+    t1 = Transform()
+    t2 = Transform()
+    t3 = t1 * t2
+    assert t3.M[0, 0] == 1
+    assert t3.M[0, 1] == 0
+    assert t3.M[1, 0] == 0
+    assert t3.M[1, 1] == 1
+    assert t3.p.x == 0
+    assert t3.p.y == 0

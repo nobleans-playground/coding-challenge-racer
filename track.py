@@ -6,7 +6,7 @@ class Track:
         self.name = module.name
         self.background = module.background
         self.resolution = module.resolution
-        self.lines = module.lines
+        self.lines = [Vector2(l) for l in module.lines]
 
     @property
     def size(self):
