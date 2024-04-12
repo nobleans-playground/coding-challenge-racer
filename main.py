@@ -22,8 +22,8 @@ class GameState:
 
     def update(self):
         keys = pygame.key.get_pressed()
-        forward = 1
-        angle = 0.1
+        forward = 2
+        angle = 0.05
         delta = Transform()
         if keys[pygame.K_LEFT]:
             delta.M = Rotation.fromangle(angle)
@@ -97,17 +97,22 @@ class Window:
         lines = [Vector2(p.x, self.window.get_height() - p.y) for p in lines]
         pygame.draw.lines(viewport, (255, 255, 255), True, lines)
 
-        # Draw a car
-        car_surface = pygame.Surface([100, 200], pygame.SRCALPHA)
-        car_surface.fill((0, 0, 0))
-        car_surface.blit(self.car_image, (0, 0))
-        text = self.font.render('player1', True, pygame.Color('yellow'))
-        car_surface.blit(text, (20, 20))
+        # Draw the car
+        car_rotated, car_rect = rotate_image_around_point(self.car_image, degrees(game_state.position.M.angle) - 90, self.car_image.get_width() / 2, self.car_image.get_height() / 2)
+        car_rect.move_ip(game_state.position.p.x, self.window.get_height() - game_state.position.p.y)
+        viewport.blit(car_rotated, (car_rect.x, car_rect.y))
 
-        car_rotated = pygame.transform.rotate(car_surface, degrees(game_state.position.M.angle) - 90)
-        car_rect = car_rotated.get_rect(
-            center=(game_state.position.p.x, self.window.get_height() - game_state.position.p.y))
-        self.window.blit(car_rotated, (car_rect.x, car_rect.y))
+        # Draw a car
+        # car_surface = pygame.Surface([100, 200], pygame.SRCALPHA)
+        # car_surface.fill((0, 0, 0))
+        # car_surface.blit(self.car_image, (0, 0))
+        # text = self.font.render('player1', True, pygame.Color('yellow'))
+        # car_surface.blit(text, (20, 20))
+
+        # car_rotated = pygame.transform.rotate(car_surface, degrees(game_state.position.M.angle) - 90)
+        # car_rect = car_rotated.get_rect(
+        #     center=(game_state.position.p.x, self.window.get_height() - game_state.position.p.y))
+        # self.window.blit(car_rotated, (car_rect.x, car_rect.y))
 
         # Draw the UI
         text = self.font.render(f'fps: {clock.get_fps():.0f}', True, pygame.Color('blue'))
@@ -123,6 +128,12 @@ class Window:
             pygame.Color('blue'))
         self.window.blit(text, (20, 60))
 
+
+def rotate_image_around_point(image, angle, x, y):
+    rotated_image = pygame.transform.rotate(image, angle)
+    new_rect = rotated_image.get_rect(center=image.get_rect(center=(x, y)).center)
+
+    return rotated_image, new_rect
 
 class App:
     def __init__(self):
