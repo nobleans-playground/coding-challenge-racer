@@ -10,6 +10,7 @@ from pygame import Rect
 from pygame.math import Vector2
 from pygame_widgets.button import Button
 
+import car
 import track1
 from linear_math import Transform, Rotation
 from track import Track
@@ -17,12 +18,13 @@ from track import Track
 
 class GameState:
     def __init__(self):
-        self.position = Transform(Rotation.fromangle(0), Vector2(100.0, 100.0))
+        self.position = Transform(Rotation.fromangle(0), Vector2(69.459796, 25.95779))
         self.track = Track(track1)
+        self.car = car
 
     def update(self):
         keys = pygame.key.get_pressed()
-        forward = 2
+        forward = 0.1
         angle = 0.05
         delta = Transform()
         if keys[pygame.K_LEFT]:
@@ -39,12 +41,12 @@ class GameState:
 class Window:
     def __init__(self):
         # Create the window, saving it to a variable.
-        self.window = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
+        self.window = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
         pygame.display.set_caption("Example resizable window")
         self.font = pygame.font.SysFont(None, 24)
 
         self.car_image = pygame.image.load("car.png").convert_alpha()
-        self.car_image = pygame.transform.scale(self.car_image, (100, 200))
+        # self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
         self.camera_pos = Transform()  # meters
         self.camera_resolution = 10  # meter/pixel
@@ -98,9 +100,25 @@ class Window:
         pygame.draw.lines(viewport, (255, 255, 255), True, lines)
 
         # Draw the car
-        car_rotated, car_rect = rotate_image_around_point(self.car_image, degrees(game_state.position.M.angle) - 90, self.car_image.get_width() / 2, self.car_image.get_height() / 2)
-        car_rect.move_ip(game_state.position.p.x, self.window.get_height() - game_state.position.p.y)
-        viewport.blit(car_rotated, (car_rect.x, car_rect.y))
+        car_rotated, car_rect = rotate_image_around_point(self.car_image, degrees(game_state.position.M.angle) - 90,
+                                                          self.car_image.get_width() / 2,
+                                                          self.car_image.get_height() / 2)
+        car_rect.move_ip(Vector2(self.car_image.get_size()) / -2)
+        car_pos = map_to_camera * game_state.position.p
+        car_pos = car_pos * self.camera_resolution
+        car_pos = Vector2(car_pos.x, self.window.get_height() - car_pos.y)
+        car_rect.move_ip(car_pos.x, car_pos.y)
+        viewport.blit(car_rotated, car_rect)
+
+        footprint = game_state.car.footprint
+        footprint_lines = [(footprint.x / 2, footprint.y / 2), (footprint.x / 2, footprint.y / -2),
+                           (footprint.x / -2, footprint.y / -2), (footprint.x / -2, footprint.y / 2)]
+        footprint_lines = [game_state.position * Vector2(l) for l in footprint_lines]
+        footprint_lines = [map_to_camera * Vector2(l) for l in footprint_lines]
+        footprint_lines = [l * self.camera_resolution for l in footprint_lines]
+        # to draw a line, the y axis is inverted
+        footprint_lines = [Vector2(p.x, self.window.get_height() - p.y) for p in footprint_lines]
+        pygame.draw.lines(viewport, (0, 255, 0), True, footprint_lines)
 
         # Draw a car
         # car_surface = pygame.Surface([100, 200], pygame.SRCALPHA)
@@ -134,6 +152,7 @@ def rotate_image_around_point(image, angle, x, y):
     new_rect = rotated_image.get_rect(center=image.get_rect(center=(x, y)).center)
 
     return rotated_image, new_rect
+
 
 class App:
     def __init__(self):
