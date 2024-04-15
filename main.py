@@ -18,7 +18,7 @@ from track import Track
 
 class GameState:
     def __init__(self):
-        self.position = Transform(Rotation.fromangle(0), Vector2(69.459796, 25.95779))
+        self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 259.5779))
         self.track = Track(track1)
         self.car = car
 
@@ -49,7 +49,7 @@ class Window:
         # self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
         self.camera_pos = Transform()  # meters
-        self.camera_resolution = 20  # pixel/m
+        self.camera_resolution = 5  # pixel/m
 
         menu_width = 200
         menu_rect = Rect(self.window.get_width() - menu_width, 0, menu_width, self.window.get_height())
@@ -92,12 +92,14 @@ class Window:
         # Draw the track
         # First, convert the track to the camera space
         map_to_camera = self.camera_pos.inverse()
-        lines = [map_to_camera * p for p in game_state.track.lines]
+        track_lines = [map_to_camera * p for p in game_state.track.lines]
         # fix lines resolution
-        lines = [p * self.camera_resolution for p in lines]
+        track_lines = [p * self.camera_resolution for p in track_lines]
         # to draw a line, the y axis is inverted
-        lines = [Vector2(p.x, self.window.get_height() - p.y) for p in lines]
-        pygame.draw.lines(viewport, (255, 255, 255), True, lines)
+        track_lines = [Vector2(p.x, self.window.get_height() - p.y) for p in track_lines]
+        track_width = game_state.track.width * self.camera_resolution
+
+        pygame.draw.lines(viewport, (255, 255, 255), True, track_lines, track_width)
 
         # Draw the car
         # car_rotated, car_rect = rotate_image_around_point(self.car_image, degrees(game_state.position.M.angle) - 90,
@@ -128,9 +130,9 @@ class Window:
         footprint = game_state.car.footprint
         footprint_lines = [(footprint.x / 2, footprint.y / 2), (footprint.x / 2, footprint.y / -2),
                            (footprint.x / -2, footprint.y / -2), (footprint.x / -2, footprint.y / 2)]
-        footprint_lines = [game_state.position * Vector2(l) for l in footprint_lines]
-        footprint_lines = [map_to_camera * Vector2(l) for l in footprint_lines]
-        footprint_lines = [l * self.camera_resolution for l in footprint_lines]
+        footprint_lines = [game_state.position * Vector2(point) for point in footprint_lines]
+        footprint_lines = [map_to_camera * point for point in footprint_lines]
+        footprint_lines = [self.camera_resolution * point for point in footprint_lines]
         # to draw a line, the y axis is inverted
         footprint_lines = [Vector2(p.x, self.window.get_height() - p.y) for p in footprint_lines]
         pygame.draw.lines(viewport, (0, 255, 0), True, footprint_lines)
@@ -178,10 +180,9 @@ class App:
         run = True
         while run:
             events = pygame.event.get()
-            print(events)
             for event in events:
                 if event.type == pygame.QUIT:
-                    print('here')
+                    print('Quitting pygame')
                     pygame.quit()
                     return
 
