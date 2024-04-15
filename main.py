@@ -49,7 +49,7 @@ class Window:
         # self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
         self.camera_pos = Transform()  # meters
-        self.camera_resolution = 10  # meter/pixel
+        self.camera_resolution = 20  # pixel/m
 
         menu_width = 200
         menu_rect = Rect(self.window.get_width() - menu_width, 0, menu_width, self.window.get_height())
@@ -100,14 +100,29 @@ class Window:
         pygame.draw.lines(viewport, (255, 255, 255), True, lines)
 
         # Draw the car
-        car_rotated, car_rect = rotate_image_around_point(self.car_image, degrees(game_state.position.M.angle) - 90,
-                                                          self.car_image.get_width() / 2,
-                                                          self.car_image.get_height() / 2)
-        car_rect.move_ip(Vector2(self.car_image.get_size()) / -2)
+        # car_rotated, car_rect = rotate_image_around_point(self.car_image, degrees(game_state.position.M.angle) - 90,
+        #                                                   self.car_image.get_width() / 2,
+        #                                                   self.car_image.get_height() / 2)
+        # car_rect.move_ip(Vector2(self.car_image.get_size()) / -2)
+        # car_pos = map_to_camera * game_state.position.p
+        # car_pos = car_pos * self.camera_resolution
+        # car_pos = Vector2(car_pos.x, self.window.get_height() - car_pos.y)
+        # car_rect.move_ip(car_pos.x, car_pos.y)
+
+        car_length = car.footprint.x / 2 * self.camera_resolution  # in pixels
+        car_scale = car_length / self.car_image.get_width()
+        car_rotated = pygame.transform.rotozoom(self.car_image, degrees(game_state.position.M.angle) - 90, car_scale)
+
         car_pos = map_to_camera * game_state.position.p
         car_pos = car_pos * self.camera_resolution
-        car_pos = Vector2(car_pos.x, self.window.get_height() - car_pos.y)
+        car_pos.y = self.window.get_height() - car_pos.y  # flip y
+
+        car_rect = car_rotated.get_rect()
+        car_rect.center = (0, 0)
+        # car_rect.move_ip(Vector2(self.car_image.get_size()) / -2 * car_scale)
+        # import ipdb; ipdb.set_trace()
         car_rect.move_ip(car_pos.x, car_pos.y)
+
         viewport.blit(car_rotated, car_rect)
 
         footprint = game_state.car.footprint
@@ -150,7 +165,6 @@ class Window:
 def rotate_image_around_point(image, angle, x, y):
     rotated_image = pygame.transform.rotate(image, angle)
     new_rect = rotated_image.get_rect(center=image.get_rect(center=(x, y)).center)
-
     return rotated_image, new_rect
 
 
@@ -164,8 +178,10 @@ class App:
         run = True
         while run:
             events = pygame.event.get()
+            print(events)
             for event in events:
                 if event.type == pygame.QUIT:
+                    print('here')
                     pygame.quit()
                     return
 
@@ -186,9 +202,9 @@ def main():
     app = App()
     print('Starting the main loop')
     asyncio.run(app.mainloop())
+    print('Main loop finished')
 
 
-print('here')
 if __name__ == '__main__':
     try:
         main()
