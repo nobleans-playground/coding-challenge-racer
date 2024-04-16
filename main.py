@@ -8,7 +8,7 @@ import pygame
 import pygame_widgets
 from pygame import Rect
 from pygame.math import Vector2
-from pygame_widgets.button import Button
+from pygame_widgets.dropdown import Dropdown
 
 import car
 import track1
@@ -49,45 +49,36 @@ class Window:
         # self.car_image = pygame.transform.scale(self.car_image, (100, 200))
 
         self.camera_pos = Transform()  # meters
-        self.camera_resolution = 5  # pixel/m
+        self.camera_resolution: float = float('nan')  # pixel/m
 
-        menu_width = 200
-        menu_rect = Rect(self.window.get_width() - menu_width, 0, menu_width, self.window.get_height())
-        menu = self.window.subsurface(menu_rect)
-        self.button = Button(
-            # Mandatory Parameters
-            menu,  # Surface to place button on
-            0,  # X-coordinate of top left corner
-            0,  # Y-coordinate of top left corner
-            100,  # Width
-            50,  # Height
-
-            # Optional Parameters
-            text='Hello',  # Text to display
-            fontSize=24,  # Size of font
-            margin=20,  # Minimum distance between text/image and edge of button
-            inactiveColour=(200, 50, 0),  # Colour of button when not being interacted with
-            hoverColour=(150, 0, 0),  # Colour of button when being hovered over
-            pressedColour=(0, 200, 20),  # Colour of button when being clicked
-            radius=5,  # Radius of border corners (leave empty for not curved)
-            onClick=lambda: print('Click')  # Function to call when clicked on
+        self.camera_dropdown = Dropdown(
+            self.window, 0, 0, 100, 50,
+            name='Select camera view',
+            choices=['Fullscreen', 'Zoom', 'Player1']
         )
-
-    def update(self, game_state: GameState):
-        x, y = pygame.mouse.get_pos()
-        width, height = self.window.get_size()
-        self.camera_pos.p = Vector2(x, height - y)
-        self.camera_pos.p.x /= width
-        self.camera_pos.p.y /= height
-        self.camera_pos.p.x *= game_state.track.size.x
-        self.camera_pos.p.y *= game_state.track.size.y
+        self.camera_dropdown.chosen = self.camera_dropdown._Dropdown__choices[0]
 
     def draw(self, game_state: GameState, clock):
         self.window.fill((0, 0, 0))
 
-        viewport_rect = Rect(0, 0, self.window.get_width() - 200, self.window.get_height())
+        viewport_rect = Rect(50, 50, self.window.get_width() - 200, self.window.get_height() - 100)
         viewport = self.window.subsurface(viewport_rect)
         viewport.fill((40, 0, 0))
+
+        # width, height = self.window.get_size()
+        if self.camera_dropdown.getSelected() == 'Fullscreen':
+            self.camera_pos.p = Vector2(0, 0)
+            self.camera_resolution = viewport.get_width() / game_state.track.size.x
+        elif self.camera_dropdown.getSelected() == 'Zoom':
+            x, y = pygame.mouse.get_pos()
+            self.camera_pos.p = Vector2(x, viewport.get_height() - y)
+            self.camera_pos.p.x /= viewport.get_width()
+            self.camera_pos.p.y /= viewport.get_height()
+            self.camera_pos.p.x *= game_state.track.size.x
+            self.camera_pos.p.y *= game_state.track.size.y
+            self.camera_resolution = 5
+        else:
+            raise NotImplementedError(self.camera_dropdown.getSelected())
 
         # Draw the track
         # First, convert the track to the camera space
@@ -96,10 +87,10 @@ class Window:
         # fix lines resolution
         track_lines = [p * self.camera_resolution for p in track_lines]
         # to draw a line, the y axis is inverted
-        track_lines = [Vector2(p.x, self.window.get_height() - p.y) for p in track_lines]
+        track_lines = [Vector2(p.x, viewport.get_height() - p.y) for p in track_lines]
         track_width = game_state.track.width * self.camera_resolution
 
-        pygame.draw.lines(viewport, (255, 255, 255), True, track_lines, track_width)
+        pygame.draw.lines(viewport, (255, 255, 255), True, track_lines, int(track_width))
 
         # Draw the car
         # car_rotated, car_rect = rotate_image_around_point(self.car_image, degrees(game_state.position.M.angle) - 90,
@@ -117,7 +108,7 @@ class Window:
 
         car_pos = map_to_camera * game_state.position.p
         car_pos = car_pos * self.camera_resolution
-        car_pos.y = self.window.get_height() - car_pos.y  # flip y
+        car_pos.y = viewport.get_height() - car_pos.y  # flip y
 
         car_rect = car_rotated.get_rect()
         car_rect.center = (0, 0)
@@ -134,7 +125,7 @@ class Window:
         footprint_lines = [map_to_camera * point for point in footprint_lines]
         footprint_lines = [self.camera_resolution * point for point in footprint_lines]
         # to draw a line, the y axis is inverted
-        footprint_lines = [Vector2(p.x, self.window.get_height() - p.y) for p in footprint_lines]
+        footprint_lines = [Vector2(p.x, viewport.get_height() - p.y) for p in footprint_lines]
         pygame.draw.lines(viewport, (0, 255, 0), True, footprint_lines)
 
         # Draw a car
@@ -163,6 +154,8 @@ class Window:
             pygame.Color('blue'))
         self.window.blit(text, (20, 60))
 
+        self.camera_dropdown.setX(self.window.get_width() - 200)
+
 
 def rotate_image_around_point(image, angle, x, y):
     rotated_image = pygame.transform.rotate(image, angle)
@@ -188,7 +181,6 @@ class App:
 
             # Update the game
             self.game_state.update()
-            self.window.update(self.game_state)
 
             # Draw the game
             self.clock.tick(60)
