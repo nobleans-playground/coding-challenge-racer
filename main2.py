@@ -62,7 +62,6 @@ class Window:
         map_scaled = pygame.transform.scale(self.map, Vector2(self.map.get_size()) * zoom)
 
         lines = [l * zoom for l in self.game_state.track.lines]
-        lines = [Vector2(l.x, map_scaled.get_height() - l.y) for l in lines]
         pygame.draw.aalines(map_scaled, (255, 0, 0), True, lines, 10)
 
         self.window.blit(map_scaled, (0, 0))

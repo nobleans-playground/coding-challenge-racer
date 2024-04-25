@@ -39,7 +39,7 @@ def main(svg, resolution):
             d = child.attrib['d']
             path = parse_path(d)
             for c in get_coordinates(path):
-                c.y = height - c.y
+                # c.y = height - c.y
                 c *= resolution
                 decimals = 13
                 c.x = round(c.x, decimals)
@@ -51,6 +51,6 @@ def main(svg, resolution):
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('svg', type=FileType())
-    parser.add_argument('--resolution', type=float, default=0.1, help='Resolution of the path [m/pixel]')
+    parser.add_argument('--resolution', type=float, default=1, help='Resolution of the path [m/pixel]')
     args = parser.parse_args()
     main(**vars(args))
