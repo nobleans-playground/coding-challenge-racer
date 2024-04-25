@@ -59,10 +59,13 @@ class Window:
         # scale map to full screen
         zoom = self.window.get_width() / self.map.get_width()
         zoom = self.window.get_height() / self.map.get_height() if self.window.get_height() / self.map.get_height() < zoom else zoom
+        map_scaled = pygame.transform.scale(self.map, Vector2(self.map.get_size()) * zoom)
 
-        lines = [Vector2(l.x, self.map.get_height() - l.y) for l in self.game_state.track.lines]
-        pygame.draw.aalines(self.map, (255, 0, 0), True, lines, 10)
-        self.window.blit(pygame.transform.scale(self.map, Vector2(self.map.get_size()) * zoom), (0, 0))
+        lines = [l * zoom for l in self.game_state.track.lines]
+        lines = [Vector2(l.x, map_scaled.get_height() - l.y) for l in lines]
+        pygame.draw.aalines(map_scaled, (255, 0, 0), True, lines, 10)
+
+        self.window.blit(map_scaled, (0, 0))
 
         # Draw the UI
         text = self.font.render(f'fps: {clock.get_fps():.0f}', True, pygame.Color('blue'))
