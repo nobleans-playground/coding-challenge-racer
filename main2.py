@@ -2,6 +2,7 @@
 
 
 import asyncio
+from math import degrees
 
 import pygame
 import pygame_widgets
@@ -34,9 +35,9 @@ class GameState:
         angle = 0.05
         delta = Transform()
         if keys[pygame.K_LEFT]:
-            delta.M = Rotation.fromangle(angle)
-        if keys[pygame.K_RIGHT]:
             delta.M = Rotation.fromangle(-angle)
+        if keys[pygame.K_RIGHT]:
+            delta.M = Rotation.fromangle(angle)
         if keys[pygame.K_UP]:
             delta.p.x = forward
         if keys[pygame.K_DOWN]:
@@ -63,6 +64,15 @@ class Window:
 
         lines = [l * zoom for l in self.game_state.track.lines]
         pygame.draw.aalines(map_scaled, (255, 0, 0), True, lines, 10)
+
+        # Draw the car
+        car = self.game_state.car
+        car_pos = game_state.position.p * zoom
+        car_angle = game_state.position.M.angle
+        car_zoom = car.scale * zoom
+        car_image = pygame.transform.rotozoom(car.image, -degrees(car_angle), car_zoom)
+        car_rect = car_image.get_rect(center=car_pos)
+        map_scaled.blit(car_image, car_rect)
 
         self.window.blit(map_scaled, (0, 0))
 
