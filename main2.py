@@ -56,7 +56,7 @@ class Window:
 
         self.map = self.game_state.track.background.convert()
 
-    def draw(self, game_state: GameState, clock):
+    def draw(self, clock):
         # scale map to full screen
         zoom = self.window.get_width() / self.map.get_width()
         zoom = self.window.get_height() / self.map.get_height() if self.window.get_height() / self.map.get_height() < zoom else zoom
@@ -67,12 +67,19 @@ class Window:
 
         # Draw the car
         car = self.game_state.car
-        car_pos = game_state.position.p * zoom
-        car_angle = game_state.position.M.angle
+        car_pos = self.game_state.position.p * zoom
+        car_angle = self.game_state.position.M.angle
         car_zoom = car.scale * zoom
         car_image = pygame.transform.rotozoom(car.image, -degrees(car_angle), car_zoom)
         car_rect = car_image.get_rect(center=car_pos)
         map_scaled.blit(car_image, car_rect)
+
+        # Draw the car collision box
+        car_footprint = car_zoom * Vector2(car.image.get_size())
+        footprint = [car_footprint.elementwise() * v / 2 for v in
+                     [Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1)]]
+        footprint = [Transform(self.game_state.position.M, car_pos) * p for p in footprint]
+        pygame.draw.polygon(map_scaled, (0, 255, 0), footprint, 2)
 
         self.window.blit(map_scaled, (0, 0))
 
@@ -81,7 +88,8 @@ class Window:
         self.window.blit(text, (20, 20))
 
         text = self.font.render(
-            f'pos: {game_state.position.p.x:.1f} {game_state.position.p.y:.1f} {game_state.position.M.angle:.1f}', True,
+            f'pos: {self.game_state.position.p.x:.1f} {self.game_state.position.p.y:.1f} {self.game_state.position.M.angle:.1f}',
+            True,
             pygame.Color('blue'))
         self.window.blit(text, (20, 40))
 
@@ -107,7 +115,7 @@ class App:
 
             # Draw the game
             self.clock.tick(60)
-            self.window.draw(self.game_state, self.clock)
+            self.window.draw(self.clock)
             pygame_widgets.update(events)
             pygame.display.update()
             await asyncio.sleep(0)  # Very important, and keep it 0
