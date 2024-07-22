@@ -29,19 +29,24 @@ class GameState:
         self.track = Track(track1)
         self.car = car2
 
-    def update(self):
+    def update(self, clock: pygame.time.Clock):
+        dt = clock.get_time() / 1000
+        max_speed = 50
+        max_steering_speed = 1
+
         keys = pygame.key.get_pressed()
-        forward = 0.1
-        angle = 0.05
-        delta = Transform()
+        speed = 0
+        steering_speed = 0
         if keys[pygame.K_LEFT]:
-            delta.M = Rotation.fromangle(-angle)
+            steering_speed = -max_steering_speed
         if keys[pygame.K_RIGHT]:
-            delta.M = Rotation.fromangle(angle)
+            steering_speed = max_steering_speed
         if keys[pygame.K_UP]:
-            delta.p.x = forward
+            speed = max_speed
         if keys[pygame.K_DOWN]:
-            delta.p.x = -forward
+            speed = -max_speed
+
+        delta = Transform(Rotation.fromangle(steering_speed * dt), Vector2(speed * dt, 0))
         self.position = self.position * delta
 
 
@@ -111,7 +116,7 @@ class App:
                     return
 
             # Update the game
-            self.game_state.update()
+            self.game_state.update(self.clock)
 
             # Draw the game
             self.clock.tick(60)
