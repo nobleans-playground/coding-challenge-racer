@@ -6,11 +6,11 @@ from math import degrees
 
 import pygame
 import pygame_widgets
+import racer.car2 as car2
+import racer.track1 as track1
 from pygame.math import Vector2
 
-import car2
-import track1
-from linear_math import Transform, Rotation
+from .linear_math import Transform, Rotation
 
 
 class Track:

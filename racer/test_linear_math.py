@@ -2,7 +2,7 @@ from math import pi
 
 import pytest
 
-from linear_math import Vector2, Rotation, Transform
+from .linear_math import Vector2, Rotation, Transform
 
 
 def test_vector_add():
