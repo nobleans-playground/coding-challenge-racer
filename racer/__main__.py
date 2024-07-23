@@ -6,7 +6,7 @@ from math import degrees
 
 import pygame
 import pygame_widgets
-import racer.car2 as car2
+import racer.car1 as car1
 import racer.track1 as track1
 from pygame.math import Vector2
 
@@ -28,7 +28,7 @@ class GameState:
         self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 259.5779))
         self.velocity = Vector2()
         self.track = Track(track1)
-        self.car = car2
+        self.car = car1
 
     def update(self, clock: pygame.time.Clock):
         dt = clock.get_time() / 1000
