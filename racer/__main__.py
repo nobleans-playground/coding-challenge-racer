@@ -23,33 +23,22 @@ class Track:
         return f"Track({self.name!r}, {self.background!r})"
 
 
-class GameState:
-    def __init__(self):
+class CarModel:
+    def __init__(self, car_type):
+        self.car_type = car_type
         self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 259.5779))
         self.velocity = Vector2()
-        self.track = Track(track1)
-        self.car = car1
 
-    def update(self, clock: pygame.time.Clock):
+    def update(self, clock: pygame.time.Clock, throttle: float, steering_speed: float):
         dt = clock.get_time() / 1000
+
+        # constants
         max_throttle = 100
         max_steering_speed = 3
         slipping_acceleration = 200
         slipping_ratio = 0.6
 
-        keys = pygame.key.get_pressed()
-        throttle = 0
-        steering_speed = 0
-        if keys[pygame.K_LEFT]:
-            steering_speed = -max_steering_speed
-        if keys[pygame.K_RIGHT]:
-            steering_speed = max_steering_speed
-        if keys[pygame.K_UP]:
-            throttle = max_throttle
-        if keys[pygame.K_DOWN]:
-            throttle = -max_throttle
-
-        acceleration = self.position.M * Vector2(throttle, 0)
+        acceleration = self.position.M * Vector2(throttle * max_throttle, 0)
 
         sideways_velocity = (self.velocity * self.position.M.cols[1]) * self.position.M.cols[1]
         if sideways_velocity.length_squared() > 0.001:
@@ -57,7 +46,8 @@ class GameState:
             acceleration -= sideways_velocity.normalize() * slipping_acceleration
 
         # rotate velocity partially
-        self.velocity = Rotation.fromangle(steering_speed * dt * (1 - slipping_ratio)) * self.velocity
+        self.velocity = Rotation.fromangle(
+            steering_speed * max_steering_speed * dt * (1 - slipping_ratio)) * self.velocity
 
         # integrate acceleration
         delta_velocity = acceleration * dt
@@ -65,7 +55,28 @@ class GameState:
 
         # integrate velocity
         self.position.p += self.velocity * dt
-        self.position.M *= Rotation.fromangle(steering_speed * dt)
+        self.position.M *= Rotation.fromangle(steering_speed * max_steering_speed * dt)
+
+
+class GameState:
+    def __init__(self):
+        self.track = Track(track1)
+        self.car_model = CarModel(car1)
+
+    def update(self, clock: pygame.time.Clock):
+        keys = pygame.key.get_pressed()
+        throttle = 0
+        steering_speed = 0
+        if keys[pygame.K_LEFT]:
+            steering_speed = -1
+        if keys[pygame.K_RIGHT]:
+            steering_speed = 1
+        if keys[pygame.K_UP]:
+            throttle = 1
+        if keys[pygame.K_DOWN]:
+            throttle = -1
+
+        self.car_model.update(clock, throttle, steering_speed)
 
 
 class Window:
@@ -89,19 +100,19 @@ class Window:
         pygame.draw.aalines(map_scaled, (255, 0, 0), True, lines, 10)
 
         # Draw the car
-        car = self.game_state.car
-        car_pos = self.game_state.position.p * zoom
-        car_angle = self.game_state.position.M.angle
-        car_zoom = car.scale * zoom
-        car_image = pygame.transform.rotozoom(car.image, -degrees(car_angle), car_zoom)
+        car_model = self.game_state.car_model
+        car_pos = car_model.position.p * zoom
+        car_angle = car_model.position.M.angle
+        car_zoom = car_model.car_type.scale * zoom
+        car_image = pygame.transform.rotozoom(car_model.car_type.image, -degrees(car_angle), car_zoom)
         car_rect = car_image.get_rect(center=car_pos)
         map_scaled.blit(car_image, car_rect)
 
         # Draw the car collision box
-        car_footprint = car_zoom * Vector2(car.image.get_size())
+        car_footprint = car_zoom * Vector2(car_model.car_type.image.get_size())
         footprint = [car_footprint.elementwise() * v / 2 for v in
                      [Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1)]]
-        footprint = [Transform(self.game_state.position.M, car_pos) * p for p in footprint]
+        footprint = [Transform(car_model.position.M, car_pos) * p for p in footprint]
         pygame.draw.polygon(map_scaled, (0, 255, 0), footprint, 2)
 
         self.window.blit(map_scaled, (0, 0))
@@ -111,7 +122,7 @@ class Window:
         self.window.blit(text, (20, 20))
 
         text = self.font.render(
-            f'pos: {self.game_state.position.p.x:.1f} {self.game_state.position.p.y:.1f} {self.game_state.position.M.angle:.1f}',
+            f'pos: {car_model.position.p.x:.1f} {car_model.position.p.y:.1f} {car_model.position.M.angle:.1f}',
             True,
             pygame.Color('blue'))
         self.window.blit(text, (20, 40))
