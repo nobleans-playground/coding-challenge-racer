@@ -26,6 +26,10 @@ class Rotation:
             raise IndexError('Invalid index type')
 
     @property
+    def cols(self):
+        return (Vector2(self.rows[0].x, self.rows[1].x), Vector2(self.rows[0].y, self.rows[1].y))
+
+    @property
     def angle(self):
         return math.atan2(self.rows[1][0], self.rows[0][0])
 

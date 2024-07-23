@@ -15,6 +15,12 @@ def test_vector_add():
     assert c != Vector2(9, 9)
 
 
+def test_matrix2x2_cols():
+    m = Rotation(0, -1, 1, 0)
+    assert m.cols[0] == Vector2(0, 1)
+    assert m.cols[1] == Vector2(-1, 0)
+
+
 def test_matrix2x2_angle():
     m = Rotation.fromangle(0)
     assert m[0, 0] == 1
