@@ -2,6 +2,8 @@
 
 
 import asyncio
+from argparse import Namespace
+from copy import deepcopy
 from math import degrees
 
 import pygame
@@ -20,6 +22,12 @@ class Track:
         self.background: pygame.surface.Surface = module.background
         self.track_width: float = module.track_width
         self.lines = [Vector2(l) for l in module.lines]
+
+    def __deepcopy__(self, memo):
+        return Track(Namespace(name=deepcopy(self.name),
+                               background=self.background.copy(),
+                               track_width=deepcopy(self.track_width),
+                               lines=deepcopy(self.lines)))
 
     def __repr__(self):
         return f"Track({self.name!r}, {self.background!r})"
@@ -64,11 +72,11 @@ class GameState:
     def __init__(self):
         self.track = Track(track1)
         self.car_model = CarModel(car1)
-        self.bot = SimpleBot()
+        self.bot = SimpleBot(deepcopy(self.track))
         self.next_waypoint = 0
 
     def update(self, clock: pygame.time.Clock):
-        if True:
+        if False:
             keys = pygame.key.get_pressed()
             throttle = 0
             steering_command = 0
@@ -81,7 +89,8 @@ class GameState:
             if keys[pygame.K_DOWN]:
                 throttle = -1
         else:
-            throttle, steering_command = self.bot.compute_commands()
+            throttle, steering_command = self.bot.compute_commands(self.next_waypoint, self.car_model.position,
+                                                                   self.car_model.velocity)
 
         self.car_model.update(clock, throttle, steering_command)
 
