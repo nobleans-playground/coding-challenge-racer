@@ -12,7 +12,7 @@ import racer.car1 as car1
 import racer.track1 as track1
 from pygame.math import Vector2
 
-from .bots import SimpleBot
+from .bots import all_bots
 from .linear_math import Transform, Rotation
 
 
@@ -33,11 +33,12 @@ class Track:
         return f"Track({self.name!r}, {self.background!r})"
 
 
-class CarModel:
+class CarInfo:
     def __init__(self, car_type):
         self.car_type = car_type
         self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 259.5779))
         self.velocity = Vector2()
+        self.next_waypoint = 0
 
     def update(self, clock: pygame.time.Clock, throttle: float, steering_command: float):
         dt = clock.get_time() / 1000
@@ -71,31 +72,36 @@ class CarModel:
 class GameState:
     def __init__(self):
         self.track = Track(track1)
-        self.car_model = CarModel(car1)
-        self.bot = SimpleBot(deepcopy(self.track))
-        self.next_waypoint = 0
+        self.bots = {}
+        for Bot in all_bots:
+            self.bots[Bot(deepcopy(self.track))] = CarInfo(car1)
 
     def update(self, clock: pygame.time.Clock):
-        if False:
-            keys = pygame.key.get_pressed()
-            throttle = 0
-            steering_command = 0
-            if keys[pygame.K_LEFT]:
-                steering_command = -1
-            if keys[pygame.K_RIGHT]:
-                steering_command = 1
-            if keys[pygame.K_UP]:
-                throttle = 1
-            if keys[pygame.K_DOWN]:
-                throttle = -1
-        else:
-            throttle, steering_command = self.bot.compute_commands(self.next_waypoint, self.car_model.position,
-                                                                   self.car_model.velocity)
+        # keys = pygame.key.get_pressed()
+        # throttle = 0
+        # steering_command = 0
+        # if keys[pygame.K_LEFT]:
+        #     steering_command = -1
+        # if keys[pygame.K_RIGHT]:
+        #     steering_command = 1
+        # if keys[pygame.K_UP]:
+        #     throttle = 1
+        # if keys[pygame.K_DOWN]:
+        #     throttle = -1
+        for bot, car_info in self.bots.items():
+            throttle, steering_command = bot.compute_commands(car_info.next_waypoint, car_info.position,
+                                                              car_info.velocity)
+            car_info.update(clock, throttle, steering_command)
 
-        self.car_model.update(clock, throttle, steering_command)
+            # throttle, steering_command = self.bot.compute_commands(self.next_waypoint, self.car_model.position,
+            #                                                        self.car_model.velocity)
 
-        if (self.track.lines[self.next_waypoint] - self.car_model.position.p).length() < self.track.track_width:
-            self.next_waypoint = (self.next_waypoint + 1) % len(self.track.lines)
+        # self.car_model.update(clock, throttle, steering_command)
+
+        # Update each car's next waypoint
+        for bot, car_info in self.bots.items():
+            if (self.track.lines[car_info.next_waypoint] - car_info.position.p).length() < self.track.track_width:
+                car_info.next_waypoint = (car_info.next_waypoint + 1) % len(self.track.lines)
 
 
 class Window:
@@ -118,29 +124,29 @@ class Window:
         lines = [l * zoom for l in self.game_state.track.lines]
         pygame.draw.aalines(map_scaled, (255, 0, 0), True, lines, 10)
 
-        # Draw the car
-        car_model = self.game_state.car_model
-        car_pos = car_model.position.p * zoom
-        car_angle = car_model.position.M.angle
-        car_zoom = car_model.car_type.scale * zoom
-        car_image = pygame.transform.rotozoom(car_model.car_type.image, -degrees(car_angle), car_zoom)
-        car_rect = car_image.get_rect(center=car_pos)
-        map_scaled.blit(car_image, car_rect)
+        # Draw the cars
+        for _, car_model in self.game_state.bots.items():
+            car_pos = car_model.position.p * zoom
+            car_angle = car_model.position.M.angle
+            car_zoom = car_model.car_type.scale * zoom
+            car_image = pygame.transform.rotozoom(car_model.car_type.image, -degrees(car_angle), car_zoom)
+            car_rect = car_image.get_rect(center=car_pos)
+            map_scaled.blit(car_image, car_rect)
 
-        # Draw the car collision box
-        car_footprint = car_zoom * Vector2(car_model.car_type.image.get_size())
-        footprint = [car_footprint.elementwise() * v / 2 for v in
-                     [Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1)]]
-        footprint = [Transform(car_model.position.M, car_pos) * p for p in footprint]
-        pygame.draw.polygon(map_scaled, (0, 255, 0), footprint, 2)
+            # Draw the car collision box
+            car_footprint = car_zoom * Vector2(car_model.car_type.image.get_size())
+            footprint = [car_footprint.elementwise() * v / 2 for v in
+                         [Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1)]]
+            footprint = [Transform(car_model.position.M, car_pos) * p for p in footprint]
+            pygame.draw.polygon(map_scaled, (0, 255, 0), footprint, 2)
 
-        # Draw a line from the car to the next waypoint
-        next_waypoint_scaled = self.game_state.track.lines[self.game_state.next_waypoint] * zoom
-        pygame.draw.line(map_scaled, (0, 0, 255), car_pos, next_waypoint_scaled, 2)
+            # Draw a line from the car to the next waypoint
+            next_waypoint_scaled = self.game_state.track.lines[car_model.next_waypoint] * zoom
+            pygame.draw.line(map_scaled, (0, 0, 255), car_pos, next_waypoint_scaled, 2)
 
-        # Draw a circle with the track width at the next waypoint
-        pygame.draw.circle(map_scaled, (0, 0, 255), next_waypoint_scaled, int(self.game_state.track.track_width * zoom),
-                           2)
+            # Draw a circle with the track width at the next waypoint
+            pygame.draw.circle(map_scaled, (0, 0, 255), next_waypoint_scaled,
+                               int(self.game_state.track.track_width * zoom), 2)
 
         self.window.blit(map_scaled, (0, 0))
 
