@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
+from hashlib import sha1
 from typing import Tuple
 
-from pygame import Vector2
+from pygame import Vector2, Color
 
 from .linear_math import Transform
 
@@ -29,6 +30,15 @@ class Bot(ABC):
         Your own name
         """
         pass
+
+    @property
+    def color(self) -> Color:
+        # hash self.name with sha1
+        h = sha1(self.name.encode()).hexdigest()
+        r = int(h[:2], 16)
+        g = int(h[2:4], 16)
+        b = int(h[4:6], 16)
+        return Color(r, g, b)
 
     @abstractmethod
     def compute_commands(self, next_waypoint: int, position: Transform, velocity: Vector2) -> Tuple:

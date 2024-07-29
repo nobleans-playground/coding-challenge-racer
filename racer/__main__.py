@@ -125,7 +125,7 @@ class Window:
         pygame.draw.aalines(map_scaled, (255, 0, 0), True, lines, 10)
 
         # Draw the cars
-        for _, car_model in self.game_state.bots.items():
+        for bot, car_model in self.game_state.bots.items():
             car_pos = car_model.position.p * zoom
             car_angle = car_model.position.M.angle
             car_zoom = car_model.car_type.scale * zoom
@@ -138,14 +138,14 @@ class Window:
             footprint = [car_footprint.elementwise() * v / 2 for v in
                          [Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1)]]
             footprint = [Transform(car_model.position.M, car_pos) * p for p in footprint]
-            pygame.draw.polygon(map_scaled, (0, 255, 0), footprint, 2)
+            pygame.draw.polygon(map_scaled, bot.color, footprint, 2)
 
             # Draw a line from the car to the next waypoint
             next_waypoint_scaled = self.game_state.track.lines[car_model.next_waypoint] * zoom
-            pygame.draw.line(map_scaled, (0, 0, 255), car_pos, next_waypoint_scaled, 2)
+            pygame.draw.line(map_scaled, bot.color, car_pos, next_waypoint_scaled, 2)
 
             # Draw a circle with the track width at the next waypoint
-            pygame.draw.circle(map_scaled, (0, 0, 255), next_waypoint_scaled,
+            pygame.draw.circle(map_scaled, bot.color, next_waypoint_scaled,
                                int(self.game_state.track.track_width * zoom), 2)
 
         self.window.blit(map_scaled, (0, 0))
