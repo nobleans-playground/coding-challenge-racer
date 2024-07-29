@@ -13,7 +13,8 @@ import racer.track1 as track1
 from pygame.math import Vector2
 
 from .bots import all_bots
-from .linear_math import Transform, Rotation
+from .car_info import CarInfo
+from .linear_math import Transform
 
 
 class Track:
@@ -31,47 +32,6 @@ class Track:
 
     def __repr__(self):
         return f"Track({self.name!r}, {self.background!r})"
-
-
-class CarInfo:
-    def __init__(self, car_type, track: Track):
-        self.car_type = car_type
-        self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 259.5779))
-        self.velocity = Vector2()
-        self.next_waypoint = 0
-        self.track = track
-
-    def update(self, clock: pygame.time.Clock, throttle: float, steering_command: float):
-        dt = clock.get_time() / 1000
-
-        # constants
-        max_throttle = 100
-        max_steering_speed = 3
-        slipping_acceleration = 200
-        slipping_ratio = 0.6
-
-        acceleration = self.position.M * Vector2(throttle * max_throttle, 0)
-
-        sideways_velocity = (self.velocity * self.position.M.cols[1]) * self.position.M.cols[1]
-        if sideways_velocity.length_squared() > 0.001:
-            # slow down the car in sideways direction
-            acceleration -= sideways_velocity.normalize() * slipping_acceleration
-
-        # rotate velocity partially
-        self.velocity = Rotation.fromangle(
-            steering_command * max_steering_speed * dt * (1 - slipping_ratio)) * self.velocity
-
-        # integrate acceleration
-        delta_velocity = acceleration * dt
-        self.velocity += delta_velocity
-
-        # integrate velocity
-        self.position.p += self.velocity * dt
-        self.position.M *= Rotation.fromangle(steering_command * max_steering_speed * dt)
-
-        # Update next waypoint
-        if (self.track.lines[self.next_waypoint] - self.position.p).length() < self.track.track_width:
-            self.next_waypoint = (self.next_waypoint + 1) % len(self.track.lines)
 
 
 class GameState:
@@ -94,13 +54,14 @@ class GameState:
         # if keys[pygame.K_DOWN]:
         #     throttle = -1
         for bot, car_info in self.bots.items():
-            result = bot.compute_commands(car_info.next_waypoint, car_info.position, car_info.velocity)
+            result = bot.compute_commands(car_info.next_waypoint, deepcopy(car_info.position),
+                                          deepcopy(car_info.velocity))
             if type(result) is tuple:
                 throttle, steering_command = result
             else:
                 print(f"Bot {bot.name} returned {type(result)} instead of a Tuple")
                 throttle, steering_command = 0, 0
-            car_info.update(clock, throttle, steering_command)
+            car_info.update(clock.get_time() / 1000, throttle, steering_command)
 
 
 class Window:
@@ -146,6 +107,13 @@ class Window:
             # Draw a circle with the track width at the next waypoint
             pygame.draw.circle(map_scaled, bot.color, next_waypoint_scaled,
                                int(self.game_state.track.track_width * zoom), 2)
+
+            # Draw the car's name
+            text = self.font.render(f'{bot.name}', True, bot.color)
+            map_scaled.blit(text, (car_pos.x - 50, car_pos.y - 50))
+
+            # Draw debug info
+            bot.draw(map_scaled, zoom)
 
         self.window.blit(map_scaled, (0, 0))
 

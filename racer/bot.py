@@ -46,3 +46,6 @@ class Bot(ABC):
         Returns: Throttle % [-1, 1], Steering % [-1, 1]
         """
         pass
+
+    def draw(self, map_scaled, zoom):
+        pass
