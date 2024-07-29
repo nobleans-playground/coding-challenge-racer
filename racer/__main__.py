@@ -34,11 +34,12 @@ class Track:
 
 
 class CarInfo:
-    def __init__(self, car_type):
+    def __init__(self, car_type, track: Track):
         self.car_type = car_type
         self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 259.5779))
         self.velocity = Vector2()
         self.next_waypoint = 0
+        self.track = track
 
     def update(self, clock: pygame.time.Clock, throttle: float, steering_command: float):
         dt = clock.get_time() / 1000
@@ -68,13 +69,17 @@ class CarInfo:
         self.position.p += self.velocity * dt
         self.position.M *= Rotation.fromangle(steering_command * max_steering_speed * dt)
 
+        # Update next waypoint
+        if (self.track.lines[self.next_waypoint] - self.position.p).length() < self.track.track_width:
+            self.next_waypoint = (self.next_waypoint + 1) % len(self.track.lines)
+
 
 class GameState:
     def __init__(self):
         self.track = Track(track1)
         self.bots = {}
         for Bot in all_bots:
-            self.bots[Bot(deepcopy(self.track))] = CarInfo(car1)
+            self.bots[Bot(deepcopy(self.track))] = CarInfo(car1, self.track)
 
     def update(self, clock: pygame.time.Clock):
         # keys = pygame.key.get_pressed()
@@ -89,19 +94,13 @@ class GameState:
         # if keys[pygame.K_DOWN]:
         #     throttle = -1
         for bot, car_info in self.bots.items():
-            throttle, steering_command = bot.compute_commands(car_info.next_waypoint, car_info.position,
-                                                              car_info.velocity)
+            result = bot.compute_commands(car_info.next_waypoint, car_info.position, car_info.velocity)
+            if type(result) is tuple:
+                throttle, steering_command = result
+            else:
+                print(f"Bot {bot.name} returned {type(result)} instead of a Tuple")
+                throttle, steering_command = 0, 0
             car_info.update(clock, throttle, steering_command)
-
-            # throttle, steering_command = self.bot.compute_commands(self.next_waypoint, self.car_model.position,
-            #                                                        self.car_model.velocity)
-
-        # self.car_model.update(clock, throttle, steering_command)
-
-        # Update each car's next waypoint
-        for bot, car_info in self.bots.items():
-            if (self.track.lines[car_info.next_waypoint] - car_info.position.p).length() < self.track.track_width:
-                car_info.next_waypoint = (car_info.next_waypoint + 1) % len(self.track.lines)
 
 
 class Window:
