@@ -1,0 +1,3 @@
+[submodule "racer/bots/example"]
+	path = racer/bots/example
+	url = git@github.com:nobleans-playground/coding-challenge-racer-bot-template.git

@@ -12,8 +12,8 @@ import racer.car1 as car1
 import racer.track1 as track1
 from pygame.math import Vector2
 
+from .bots import SimpleBot
 from .linear_math import Transform, Rotation
-from .simple_bot import SimpleBot
 
 
 class Track:
