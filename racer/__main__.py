@@ -2,66 +2,15 @@
 
 
 import asyncio
-from argparse import Namespace
-from copy import deepcopy
 from math import degrees
 
 import pygame
 import pygame_widgets
-import racer.car1 as car1
-import racer.track1 as track1
 from pygame.math import Vector2
 
-from .bots import all_bots
-from .car_info import CarInfo
+from .constants import framerate
+from .game_state import GameState
 from .linear_math import Transform
-
-
-class Track:
-    def __init__(self, module):
-        self.name: str = module.name
-        self.background: pygame.surface.Surface = module.background
-        self.track_width: float = module.track_width
-        self.lines = [Vector2(l) for l in module.lines]
-
-    def __deepcopy__(self, memo):
-        return Track(Namespace(name=deepcopy(self.name),
-                               background=self.background.copy(),
-                               track_width=deepcopy(self.track_width),
-                               lines=deepcopy(self.lines)))
-
-    def __repr__(self):
-        return f"Track({self.name!r}, {self.background!r})"
-
-
-class GameState:
-    def __init__(self):
-        self.track = Track(track1)
-        self.bots = {}
-        for Bot in all_bots:
-            self.bots[Bot(deepcopy(self.track))] = CarInfo(car1, self.track)
-
-    def update(self, clock: pygame.time.Clock):
-        # keys = pygame.key.get_pressed()
-        # throttle = 0
-        # steering_command = 0
-        # if keys[pygame.K_LEFT]:
-        #     steering_command = -1
-        # if keys[pygame.K_RIGHT]:
-        #     steering_command = 1
-        # if keys[pygame.K_UP]:
-        #     throttle = 1
-        # if keys[pygame.K_DOWN]:
-        #     throttle = -1
-        for bot, car_info in self.bots.items():
-            result = bot.compute_commands(car_info.next_waypoint, deepcopy(car_info.position),
-                                          deepcopy(car_info.velocity))
-            if type(result) is tuple:
-                throttle, steering_command = result
-            else:
-                print(f"Bot {bot.name} returned {type(result)} instead of a Tuple")
-                throttle, steering_command = 0, 0
-            car_info.update(clock.get_time() / 1000, throttle, steering_command)
 
 
 class Window:
@@ -145,10 +94,10 @@ class App:
                     return
 
             # Update the game
-            self.game_state.update(self.clock)
+            self.game_state.update(1 / framerate)
 
             # Draw the game
-            self.clock.tick(60)
+            self.clock.tick(framerate)
             self.window.draw(self.clock)
             pygame_widgets.update(events)
             pygame.display.update()
