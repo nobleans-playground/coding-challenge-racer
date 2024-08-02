@@ -7,7 +7,7 @@ from .track import Track
 class CarInfo:
     def __init__(self, car_type, track: Track):
         self.car_type = car_type
-        self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 259.5779))
+        self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 480 - 259.5779))
         self.velocity = Vector2()
         self.next_waypoint = 0
         self.track = track

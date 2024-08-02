@@ -5,7 +5,6 @@ import asyncio
 from math import degrees
 
 import pygame
-import pygame_widgets
 from pygame.math import Vector2
 
 from .constants import framerate
@@ -99,7 +98,6 @@ class App:
             # Draw the game
             self.clock.tick(framerate)
             self.window.draw(self.clock)
-            pygame_widgets.update(events)
             pygame.display.update()
             await asyncio.sleep(0)  # Very important, and keep it 0
 

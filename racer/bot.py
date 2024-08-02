@@ -5,6 +5,7 @@ from typing import Tuple
 from pygame import Vector2, Color
 
 from .linear_math import Transform
+from .track import Track
 
 
 class Bot(ABC):
@@ -12,7 +13,7 @@ class Bot(ABC):
     To implement a Bot, you'll have to inherit from this class and implement all abstract methods
     """
 
-    def __init__(self, track):
+    def __init__(self, track: Track):
         self.track = track
 
     @property
