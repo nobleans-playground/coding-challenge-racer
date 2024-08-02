@@ -3,6 +3,7 @@
 ![Demo](./demo.gif)
 
 ## Usage
-```
+
+```bash
 python3 -m racer
 ```
