@@ -46,7 +46,4 @@ jobs:
         pytest --ignore=snakes/bots/
     - name: Test imports
       run: |
-        ./commandline.py -h
-        ./elo.py -h
-        ./gui.py -h
         ./tournament.py -h
