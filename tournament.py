@@ -11,8 +11,8 @@ def main():
     game_state = single_game()
 
     for bot, car_info in game_state.bots.items():
-        print(
-            f'{bot.name} reached round {car_info.round} waypoint {car_info.next_waypoint} with {car_info.cpu:.2f} seconds of CPU time')
+        print(f'{bot.name} reached round {car_info.round} waypoint {car_info.next_waypoint} with {car_info.cpu:.2f} '
+              f'seconds of CPU time')
 
 
 def single_game():
