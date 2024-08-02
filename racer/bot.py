@@ -42,7 +42,7 @@ class Bot(ABC):
         return Color(r, g, b)
 
     @abstractmethod
-    def compute_commands(self, next_waypoint: int, position: Transform, velocity: Vector2) -> Tuple:
+    def compute_commands(self, next_waypoint: int, position: Transform, velocity: Vector2) -> Tuple[float, float]:
         """
         Returns: Throttle % [-1, 1], Steering % [-1, 1]
         """

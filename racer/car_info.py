@@ -11,6 +11,8 @@ class CarInfo:
         self.velocity = Vector2()
         self.next_waypoint = 0
         self.track = track
+        self.cpu = 0
+        self.last_exception = None
 
     def update(self, dt: float, throttle: float, steering_command: float):
         # constants
