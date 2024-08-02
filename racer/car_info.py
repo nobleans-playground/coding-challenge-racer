@@ -9,6 +9,7 @@ class CarInfo:
         self.car_type = car_type
         self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 480 - 259.5779))
         self.velocity = Vector2()
+        self.round = 0
         self.next_waypoint = 0
         self.track = track
         self.cpu = 0
@@ -42,4 +43,7 @@ class CarInfo:
 
         # Update next waypoint
         if (self.track.lines[self.next_waypoint] - self.position.p).length() < self.track.track_width:
-            self.next_waypoint = (self.next_waypoint + 1) % len(self.track.lines)
+            self.next_waypoint = self.next_waypoint + 1
+            if self.next_waypoint >= len(self.track.lines):
+                self.next_waypoint = 0
+                self.round += 1
