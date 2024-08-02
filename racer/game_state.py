@@ -16,17 +16,6 @@ class GameState:
             self.bots[Bot(deepcopy(self.track))] = CarInfo(car1, self.track)
 
     def update(self, dt: float):
-        # keys = pygame.key.get_pressed()
-        # throttle = 0
-        # steering_command = 0
-        # if keys[pygame.K_LEFT]:
-        #     steering_command = -1
-        # if keys[pygame.K_RIGHT]:
-        #     steering_command = 1
-        # if keys[pygame.K_UP]:
-        #     throttle = 1
-        # if keys[pygame.K_DOWN]:
-        #     throttle = -1
         for bot, car_info in self.bots.items():
             result = bot.compute_commands(car_info.next_waypoint, deepcopy(car_info.position),
                                           deepcopy(car_info.velocity))
