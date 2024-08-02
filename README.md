@@ -4,5 +4,5 @@
 
 ## Usage
 ```
-python -m racer
+python3 -m racer
 ```
