@@ -1,4 +1,4 @@
-# Coding Challange: Multiplayer Racing Game
+# Coding Challenge: Multiplayer Racing Game
 
 ![Demo](./demo.gif)
 
