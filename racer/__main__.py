@@ -25,11 +25,10 @@ class Window:
 
     def draw(self, clock):
         # scale map to full screen
-        zoom = self.window.get_width() / self.map.get_width()
-        zoom = self.window.get_height() / self.map.get_height() if self.window.get_height() / self.map.get_height() < zoom else zoom
+        zoom = min(self.window.get_width() / self.map.get_width(), self.window.get_height() / self.map.get_height())
         map_scaled = pygame.transform.scale(self.map, Vector2(self.map.get_size()) * zoom)
 
-        lines = [l * zoom for l in self.game_state.track.lines]
+        lines = [line * zoom for line in self.game_state.track.lines]
         pygame.draw.aalines(map_scaled, (255, 0, 0), True, lines, 10)
 
         # Draw the cars

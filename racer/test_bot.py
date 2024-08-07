@@ -1,6 +1,8 @@
 import pytest
+import racer.track1 as track1
 
 from .bot import Bot
+from .track import Track
 
 
 def test_complete_bot():
@@ -16,7 +18,7 @@ def test_complete_bot():
         def compute_commands(self):
             return 0.5, 0.5
 
-    bot = SimpleBot()
+    SimpleBot(track=Track(track1))
 
 
 def test_missing_compute_commands():
@@ -30,7 +32,7 @@ def test_missing_compute_commands():
             return "Nobleo"
 
     with pytest.raises(TypeError):
-        Incomplete()
+        Incomplete(track=Track(track1))
 
 
 def test_missing_name():
@@ -43,7 +45,7 @@ def test_missing_name():
             return 0.5, 0.5
 
     with pytest.raises(TypeError):
-        Incomplete()
+        Incomplete(track=Track(track1))
 
 
 def test_missing_contributor():
@@ -56,4 +58,4 @@ def test_missing_contributor():
             return 0.5, 0.5
 
     with pytest.raises(TypeError):
-        Incomplete()
+        Incomplete(track=Track(track1))
