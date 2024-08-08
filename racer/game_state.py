@@ -3,8 +3,8 @@ from time import time
 from traceback import print_exception
 from typing import Dict
 
-import racer.car1 as car1
-import racer.track1 as track1
+import racer.cars.car1 as car1
+import racer.tracks.track1 as track1
 
 from .bots import all_bots
 from .car_info import CarInfo

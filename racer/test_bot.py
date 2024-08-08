@@ -1,8 +1,9 @@
 import pytest
-import racer.track1 as track1
 
 from .bot import Bot
 from .track import Track
+# import racer.tracks.track1 as track1
+from .tracks import track1
 
 
 def test_complete_bot():
