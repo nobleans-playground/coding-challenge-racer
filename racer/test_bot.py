@@ -2,7 +2,6 @@ import pytest
 
 from .bot import Bot
 from .track import Track
-# import racer.tracks.track1 as track1
 from .tracks import track1
 
 
