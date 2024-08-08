@@ -4,7 +4,6 @@ import os.path
 import pygame
 
 name = 'track1.svg'
-resolution = 1
 background = pygame.image.load(os.path.splitext(__file__)[0] + '.jpg')
 track_width = 15
 lines = [

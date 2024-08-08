@@ -11,8 +11,8 @@ from .tracks import track1
 
 
 class GameState:
-    def __init__(self):
-        self.track = Track(track1)
+    def __init__(self, track: Track):
+        self.track = track
         self.bots = {}  # type: Dict[Bot, CarInfo]
         for Bot in all_bots:
             self.bots[Bot(deepcopy(self.track))] = CarInfo(car1, self.track)
