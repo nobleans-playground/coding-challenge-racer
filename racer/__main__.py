@@ -12,7 +12,7 @@ from .game_state import GameState
 from .linear_math import Transform
 from .track import Track
 from .tracks import track1
-from .tracks import track2
+
 
 class Window:
     def __init__(self, game_state: GameState):
@@ -79,7 +79,7 @@ class Window:
 
 class App:
     def __init__(self):
-        self.game_state = GameState(Track(track2))
+        self.game_state = GameState(Track(track1))
         self.window = Window(game_state=self.game_state)
         self.clock = pygame.time.Clock()
 

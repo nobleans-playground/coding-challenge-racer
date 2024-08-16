@@ -5,6 +5,7 @@ import pygame
 
 name = 'track2.svg'
 background = pygame.image.load(os.path.splitext(__file__)[0] + '.webp')
+scale = 1
 track_width = 30
 lines = [
     (1226.2844, 739.13218),
