@@ -1,13 +1,21 @@
+from copy import deepcopy
+from math import radians
+
 from pygame.math import Vector2
 
+from .car import Car
 from .linear_math import Transform, Rotation
 from .track import Track
 
 
 class CarInfo:
-    def __init__(self, car_type, track: Track):
+    def __init__(self, car_type: Car, track: Track):
+        # angle of the first section
+        starting_angle = (track.lines[1] - track.lines[0]).as_polar()[1]
+        print(starting_angle)
+
         self.car_type = car_type
-        self.position = Transform(Rotation.fromangle(0), Vector2(694.59796, 480 - 259.5779))
+        self.position = Transform(Rotation.fromangle(radians(starting_angle)), deepcopy(track.lines[0]))
         self.velocity = Vector2()
         self.round = 0
         self.next_waypoint = 0

@@ -4,10 +4,10 @@ from traceback import print_exception
 from typing import Dict
 
 from .bots import all_bots
+from .car import Car
 from .car_info import CarInfo
 from .cars import car1
 from .track import Track
-from .tracks import track1
 
 
 class GameState:
@@ -15,7 +15,7 @@ class GameState:
         self.track = track
         self.bots = {}  # type: Dict[Bot, CarInfo]
         for Bot in all_bots:
-            self.bots[Bot(deepcopy(self.track))] = CarInfo(car1, self.track)
+            self.bots[Bot(deepcopy(self.track))] = CarInfo(Car(car1), self.track)
 
     def update(self, dt: float):
         for bot, car_info in self.bots.items():
