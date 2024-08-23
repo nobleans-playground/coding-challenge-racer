@@ -101,18 +101,3 @@ class App:
             self.window.draw(self.clock)
             pygame.display.update()
             await asyncio.sleep(0)  # Very important, and keep it 0
-
-
-def main():
-    pygame.init()
-    app = App()
-    print('Starting the main loop')
-    asyncio.run(app.mainloop())
-    print('Main loop finished')
-
-
-if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-        pygame.quit()

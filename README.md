@@ -17,7 +17,7 @@ Read [How to submit a bot](#how-to-submit-a-bot) to learn how to get started.
 
 On the command line, go to the folder where you have cloned this repository and run the following command:
 ```bash
-python3 -m racer
+python3 gui.py
 ```
 For more information see the section [How to start developing a bot](#how-to-start-developing-a-bot).
 
@@ -95,3 +95,10 @@ git pull
 # Pull the latest code from all the bots
 git submodule update --init
 ```
+
+### Description of all the executables
+
+- **gui.py**:
+  Battle all bots against eachother in a graphical user interface.
+- **tournament.py**:
+  Battle all bots against eachother on the command line.
