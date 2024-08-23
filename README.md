@@ -19,6 +19,7 @@ On the command line, go to the folder where you have cloned this repository and 
 ```bash
 python3 -m racer
 ```
+For more information see the section [How to start developing a bot](#how-to-start-developing-a-bot).
 
 ## Game rules
 
@@ -66,3 +67,31 @@ You can follow the following steps to create your own bot.
    Note: Your bot doesn't have to be complete to be added, it simply needs to run and return a valid move.
    You can update/change/refactor your bot at any point during the challenge.
    Use this template" in  to create your own bot repository.
+
+## How to start developing a bot
+
+1. Clone this repository using `git clone --recursive git@github.com:Rayman/coding-challenge-racer.git`.
+   The `--recursive` is to pull in all submodule bots.
+2. Install all the dependencies
+   - **On linux** `sudo apt install -y python3-numpy python3-pygame python3-tqdm`
+   - **On Windows** `pip install -r requirements.txt`
+3. Run `gui.py` or any of the other executables
+
+## How to add your bot to the game
+
+- If you bot has **NOT** being added to the main repository, clone the repository that you created from the template to the [racer/bots](./racer/bots) folder.
+  Don't forget to add it to the bots list in [`racer/bots/__init__.py`](./racer/bots/__init__.py).
+  See [racer/bots/example/bot.py](./racer/bots/example/bot.py) for inspiration.
+- If you bot has been added to the main repository, just edit the files in your own bots folder.
+
+### Updating your local repository with the newest changes
+
+Over the course of the challenge your local repository might be out-of-date with all the other bots.
+To update the environent you can run the following two commands from the root folder.****
+
+```sh
+# Pull the latest game-code
+git pull
+# Pull the latest code from all the bots
+git submodule update --init
+```
