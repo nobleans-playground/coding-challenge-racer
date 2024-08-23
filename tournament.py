@@ -5,6 +5,8 @@ import tqdm
 
 from racer.constants import framerate
 from racer.game_state import GameState
+from racer.track import Track
+from racer.tracks import track1
 
 
 def main():
@@ -16,13 +18,15 @@ def main():
 
 
 def single_game():
-    game_state = GameState()
-    for i in tqdm.trange(0, 2000):
+    game_state = GameState(Track(track1))
+    for i in tqdm.trange(0, 10000):
         game_state.update(1 / framerate)
 
         for bot, car_info in game_state.bots.items():
             if car_info.round >= 1:
                 return game_state
+
+    return game_state
 
 
 if __name__ == '__main__':
