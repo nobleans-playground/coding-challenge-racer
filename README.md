@@ -81,7 +81,7 @@ You can follow the following steps to create your own bot.
 
 - If you bot has **NOT** being added to the main repository, clone the repository that you created from the template to the [racer/bots](./racer/bots) folder.
   Don't forget to add it to the bots list in [`racer/bots/__init__.py`](./racer/bots/__init__.py).
-  See [racer/bots/example/bot.py](./racer/bots/example/bot.py) for inspiration.
+  See [racer/bots/example/bot.py](https://github.com/nobleans-playground/coding-challenge-racer-bot-template/blob/main/bot.py) for inspiration.
 - If you bot has been added to the main repository, just edit the files in your own bots folder.
 
 ### Updating your local repository with the newest changes
