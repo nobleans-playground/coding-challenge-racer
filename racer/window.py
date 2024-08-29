@@ -31,7 +31,7 @@ class Window:
         map_scaled = pygame.transform.scale(self.map, Vector2(self.map.get_size()) * zoom)
 
         lines = [line * zoom for line in self.game_state.track.lines]
-        pygame.draw.aalines(map_scaled, (255, 0, 0), True, lines, 10)
+        pygame.draw.aalines(map_scaled, (255, 0, 0), True, lines)
 
         # Draw the cars
         for bot, car_model in self.game_state.bots.items():

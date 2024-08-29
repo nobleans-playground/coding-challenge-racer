@@ -14,10 +14,12 @@ class GameState:
     def __init__(self, track: Track):
         self.track = track
         self.bots = {}  # type: Dict[Bot, CarInfo]
+        self.frames = 0  # type: int # Number of frames since the start of the game
         for Bot in all_bots:
             self.bots[Bot(deepcopy(self.track))] = CarInfo(Car(car1), self.track)
 
     def update(self, dt: float):
+        self.frames += 1
         for bot, car_info in self.bots.items():
             result, cpu = self.get_bot_commands(bot, car_info)
 

@@ -12,7 +12,6 @@ class CarInfo:
     def __init__(self, car_type: Car, track: Track):
         # angle of the first section
         starting_angle = (track.lines[1] - track.lines[0]).as_polar()[1]
-        print(starting_angle)
 
         self.car_type = car_type
         self.position = Transform(Rotation.fromangle(radians(starting_angle)), deepcopy(track.lines[0]))

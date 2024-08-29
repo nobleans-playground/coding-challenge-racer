@@ -14,12 +14,12 @@ def main():
 
     for bot, car_info in game_state.bots.items():
         print(f'{bot.name} reached round {car_info.round} waypoint {car_info.next_waypoint} with {car_info.cpu:.2f} '
-              f'seconds of CPU time')
+              f'seconds of CPU time ({car_info.cpu * 1000 / game_state.frames:.2f} ms CPU/f)')
 
 
 def single_game():
     game_state = GameState(Track(track1))
-    for i in tqdm.trange(0, 10000):
+    for _ in tqdm.trange(0, 500):
         game_state.update(1 / framerate)
 
         for bot, car_info in game_state.bots.items():
