@@ -1,4 +1,13 @@
 #!/usr/bin/env python3
+
+# Numpy has to be imported first for pygbag
+import numpy
+
+assert numpy
+
+# Rest of the imports
+
+
 import asyncio
 
 import pygame
