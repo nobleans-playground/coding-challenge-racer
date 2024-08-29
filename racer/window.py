@@ -2,14 +2,13 @@
 
 
 import asyncio
-from functools import partial
 from math import degrees
 
 import pygame
 import pygame_widgets
 from pygame import Color
 from pygame.math import Vector2
-from pygame_widgets.button import ButtonArray
+from pygame_widgets.button import Button
 
 from .constants import framerate
 from .game_state import GameState
@@ -29,32 +28,10 @@ class Window:
 
         self.map = self.game_state.track.background.convert()
 
-        names = []
-        for bot, car_info in self.game_state.bots.items():
-            names.append(f'{bot.name} ({bot.contributor})')
-
-        def cb(i):
-            print(f'Button {i} clicked')
-
-        callbacks = [partial(cb, i) for i in range(len(names))]
-
-        self.player_list = ButtonArray(
-            # Mandatory Parameters
-            self.window,  # Surface to place button array on
-            50,  # X-coordinate
-            50,  # Y-coordinate
-            200,  # Width
-            50,  # Height
-            (1, len(names)),  # Shape: 2 buttons wide, 2 buttons tall
-            inactiveColours=[Color('black') for _ in names],
-            hoverColours=[Color(50, 50, 50) for _ in names],
-            colour=Color('black', a=0),
-            textColours=[bot.color for bot in self.game_state.bots.keys()],
-            fontSizes=[18 for _ in names],
-            textHAligns=['left' for _ in names],
-            border=0,
-            texts=names,
-            onClicks=callbacks,
+        self.reset_button = Button(
+            self.window, 20, 20, 80, 30, text='Reset', fontSize=20,
+            inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
+            onClick=lambda: self.game_state.reset()
         )
 
     def draw(self, clock):
@@ -99,20 +76,28 @@ class Window:
         self.window.blit(map_scaled, (0, 0))
 
         # Draw the UI
-        text = self.font.render(f'fps: {clock.get_fps():.0f}', True, pygame.Color('blue'))
-        self.window.blit(text, (20, 20))
+        text = self.font.render(f'fps: {clock.get_fps():.0f}', True, pygame.Color('white'))
+        self.window.blit(text, (20, 60))
 
-        text = self.font.render(
-            f'pos: {car_model.position.p.x:.1f} {car_model.position.p.y:.1f} {car_model.position.M.angle:.1f}',
-            True,
-            pygame.Color('blue'))
-        self.window.blit(text, (20, 40))
+        # Draw each player's name on the right side of the window
+        offset_from_top = 20
+        # Frist draw a black background
+        pygame.draw.rect(self.window, Color('black'),
+                         (self.window.get_width() - 300, offset_from_top, 300, len(self.game_state.bots) * 20))
 
-        # Align player_list on the right side of the window
-        side_spacing = 10
-        self.player_list.setX(self.window.get_width() - self.player_list.getWidth() - side_spacing)
-        for button in self.player_list.getButtons():
-            button.setX(self.window.get_width() - self.player_list.getWidth() - side_spacing)
+        fastest_bot = self.game_state.ranked()[0]
+        for i, bot in enumerate(self.game_state.ranked()):
+            car_info = self.game_state.bots[bot]
+            fastest_bot_time = self.game_state.bots[fastest_bot].waypoint_timing[len(car_info.waypoint_timing) - 1]
+            own_time = car_info.waypoint_timing[len(car_info.waypoint_timing) - 1]
+            behind = own_time - fastest_bot_time
+
+            text = self.font.render(f'{bot.name} ({bot.contributor})', True, bot.color)
+            self.window.blit(text, (self.window.get_width() - 300, offset_from_top + i * 20))
+
+            # Draw behind time
+            text = self.font.render(f'{behind:+.2f}', True, Color('white'))
+            self.window.blit(text, (self.window.get_width() - 50, offset_from_top + i * 20))
 
 
 class App:

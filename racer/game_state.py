@@ -3,6 +3,7 @@ from time import time
 from traceback import print_exception
 from typing import Dict
 
+from .bot import Bot
 from .bots import all_bots
 from .car import Car
 from .car_info import CarInfo
@@ -36,7 +37,7 @@ class GameState:
                 throttle, steering_command = 0, 0
             else:
                 throttle, steering_command = result
-            car_info.update(dt, throttle, steering_command)
+            car_info.update(self.frames * dt, dt, throttle, steering_command)
 
     def get_bot_commands(self, bot, car_info):
         start = time()
@@ -48,3 +49,9 @@ class GameState:
 
         cpu = time() - start
         return result, cpu
+
+    def ranked(self) -> Dict[Bot, float]:
+        # Search for the car_info with the longest waypoint_timing
+        bots = list(self.bots.keys())
+        bots.sort(key=lambda bot: (self.bots[bot].round, self.bots[bot].next_waypoint), reverse=True)
+        return bots

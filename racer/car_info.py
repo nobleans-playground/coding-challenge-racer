@@ -21,8 +21,9 @@ class CarInfo:
         self.track = track
         self.cpu = 0
         self.last_exception = None
+        self.waypoint_timing = []
 
-    def update(self, dt: float, throttle: float, steering_command: float):
+    def update(self, time: float, dt: float, throttle: float, steering_command: float):
         # constants
         max_throttle = 100
         max_steering_speed = 3
@@ -54,3 +55,6 @@ class CarInfo:
             if self.next_waypoint >= len(self.track.lines):
                 self.next_waypoint = 0
                 self.round += 1
+
+            # Save the time it took to reach the waypoint
+            self.waypoint_timing.append(time)
