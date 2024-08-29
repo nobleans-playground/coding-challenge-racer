@@ -2,10 +2,14 @@
 
 
 import asyncio
+from functools import partial
 from math import degrees
 
 import pygame
+import pygame_widgets
+from pygame import Color
 from pygame.math import Vector2
+from pygame_widgets.button import ButtonArray
 
 from .constants import framerate
 from .game_state import GameState
@@ -24,6 +28,34 @@ class Window:
         self.font = pygame.font.SysFont(None, 24)
 
         self.map = self.game_state.track.background.convert()
+
+        names = []
+        for bot, car_info in self.game_state.bots.items():
+            names.append(f'{bot.name} ({bot.contributor})')
+
+        def cb(i):
+            print(f'Button {i} clicked')
+
+        callbacks = [partial(cb, i) for i in range(len(names))]
+
+        self.player_list = ButtonArray(
+            # Mandatory Parameters
+            self.window,  # Surface to place button array on
+            50,  # X-coordinate
+            50,  # Y-coordinate
+            200,  # Width
+            50,  # Height
+            (1, len(names)),  # Shape: 2 buttons wide, 2 buttons tall
+            inactiveColours=[Color('black') for _ in names],
+            hoverColours=[Color(50, 50, 50) for _ in names],
+            colour=Color('black', a=0),
+            textColours=[bot.color for bot in self.game_state.bots.keys()],
+            fontSizes=[18 for _ in names],
+            textHAligns=['left' for _ in names],
+            border=0,
+            texts=names,
+            onClicks=callbacks,
+        )
 
     def draw(self, clock):
         # scale map to full screen
@@ -76,6 +108,12 @@ class Window:
             pygame.Color('blue'))
         self.window.blit(text, (20, 40))
 
+        # Align player_list on the right side of the window
+        side_spacing = 10
+        self.player_list.setX(self.window.get_width() - self.player_list.getWidth() - side_spacing)
+        for button in self.player_list.getButtons():
+            button.setX(self.window.get_width() - self.player_list.getWidth() - side_spacing)
+
 
 class App:
     def __init__(self):
@@ -99,5 +137,6 @@ class App:
             # Draw the game
             self.clock.tick(framerate)
             self.window.draw(self.clock)
+            pygame_widgets.update(events)
             pygame.display.update()
             await asyncio.sleep(0)  # Very important, and keep it 0

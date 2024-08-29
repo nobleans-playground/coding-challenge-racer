@@ -5,12 +5,12 @@ import numpy
 
 assert numpy
 
-# Rest of the imports
-
-
 import asyncio
 
 import pygame
+import pygame_widgets
+
+assert pygame_widgets
 
 from racer.window import App
 
