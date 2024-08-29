@@ -19,6 +19,11 @@ class GameState:
         for Bot in all_bots:
             self.bots[Bot(deepcopy(self.track))] = CarInfo(Car(car1), self.track)
 
+    def reset(self):
+        self.frames = 0
+        for bot, car_info in self.bots.items():
+            car_info.reset()
+
     def update(self, dt: float):
         self.frames += 1
         for bot, car_info in self.bots.items():

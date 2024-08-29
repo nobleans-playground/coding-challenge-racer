@@ -23,6 +23,18 @@ class CarInfo:
         self.last_exception = None
         self.waypoint_timing = []
 
+    def reset(self):
+        # angle of the first section
+        starting_angle = (self.track.lines[1] - self.track.lines[0]).as_polar()[1]
+
+        self.position = Transform(Rotation.fromangle(radians(starting_angle)), deepcopy(self.track.lines[0]))
+        self.velocity = Vector2()
+        self.round = 0
+        self.next_waypoint = 0
+        self.cpu = 0
+        self.last_exception = None
+        self.waypoint_timing = []
+
     def update(self, time: float, dt: float, throttle: float, steering_command: float):
         # constants
         max_throttle = 100
