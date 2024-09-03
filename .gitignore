@@ -6,6 +6,10 @@ __pycache__/
 # Distribution / packaging
 build/
 
+# Unit test / coverage reports
+.pytest_cache/
+.benchmarks/
+
 # Environments
 .env
 .venv
