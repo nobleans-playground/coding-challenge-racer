@@ -1,8 +1,8 @@
 import pytest
 
-from .bot import Bot
-from .track import Track
-from .tracks import track1
+from ..bot import Bot
+from ..track import Track
+from ..tracks import track1
 
 
 def test_complete_bot():
