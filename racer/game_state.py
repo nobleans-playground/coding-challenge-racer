@@ -11,6 +11,10 @@ from .cars import car1
 from .track import Track
 
 
+def clamp(v: float, lo: float, hi: float):
+    return max(lo, min(v, hi))
+
+
 class GameState:
     def __init__(self, track: Track):
         self.track = track
@@ -42,6 +46,9 @@ class GameState:
                 throttle, steering_command = 0, 0
             else:
                 throttle, steering_command = result
+                # Clamp inputs
+                throttle = clamp(throttle, -1, 1)
+                steering_command = clamp(steering_command, -1, 1)
             car_info.update(self.frames * dt, dt, throttle, steering_command)
 
     def get_bot_commands(self, bot, car_info):
