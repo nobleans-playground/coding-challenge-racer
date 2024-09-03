@@ -13,7 +13,7 @@ class CarPhysics:
         self.position = position
         self.velocity = velocity
 
-    def update(self, time: float, dt: float, throttle: float, steering_command: float):
+    def update(self, dt: float, throttle: float, steering_command: float):
         # constants
         max_throttle = 100
         max_steering_speed = 3
@@ -56,11 +56,11 @@ class CarInfo:
         self.waypoint_timing = []
 
     @property
-    def position(self):
+    def position(self) -> Transform:
         return self.car_physics.position
 
     @property
-    def velocity(self):
+    def velocity(self) -> Vector2:
         return self.car_physics.velocity
 
     def reset(self):
@@ -77,7 +77,7 @@ class CarInfo:
         self.waypoint_timing = []
 
     def update(self, time: float, dt: float, throttle: float, steering_command: float):
-        self.car_physics.update(time, dt, throttle, steering_command)
+        self.car_physics.update(dt, throttle, steering_command)
 
         # Update next waypoint
         if (self.track.lines[self.next_waypoint] - self.position.p).length() < self.track.track_width:
