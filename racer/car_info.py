@@ -9,6 +9,8 @@ from .track import Track
 
 
 class CarPhysics:
+    __slots__ = ('position', 'velocity')
+
     def __init__(self, position: Transform, velocity: Vector2):
         self.position = position
         self.velocity = velocity

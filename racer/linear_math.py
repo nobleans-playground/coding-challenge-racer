@@ -10,6 +10,8 @@ from pygame.math import Vector2
 class Rotation:
     """2x2 rotation matrix"""
 
+    __slots__ = ('rows',)
+
     def __init__(self, xx, xy, yx, yy):
         self.rows = (Vector2(xx, xy), Vector2(yx, yy))
 
@@ -56,6 +58,8 @@ class Rotation:
 
 class Transform:
     """Rigid 2d transforms with only translation and rotation"""
+
+    __slots__ = ('M', 'p')
 
     def __init__(self, M: Rotation = None, p: Vector2 = None):
         self.M = M if M is not None else Rotation.fromangle(0)
