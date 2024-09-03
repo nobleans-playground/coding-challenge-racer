@@ -8,32 +8,10 @@ from .linear_math import Transform, Rotation
 from .track import Track
 
 
-class CarInfo:
-    def __init__(self, car_type: Car, track: Track):
-        # angle of the first section
-        starting_angle = (track.lines[1] - track.lines[0]).as_polar()[1]
-
-        self.car_type = car_type
-        self.position = Transform(Rotation.fromangle(radians(starting_angle)), deepcopy(track.lines[0]))
-        self.velocity = Vector2()
-        self.round = 0
-        self.next_waypoint = 0
-        self.track = track
-        self.cpu = 0
-        self.last_exception = None
-        self.waypoint_timing = []
-
-    def reset(self):
-        # angle of the first section
-        starting_angle = (self.track.lines[1] - self.track.lines[0]).as_polar()[1]
-
-        self.position = Transform(Rotation.fromangle(radians(starting_angle)), deepcopy(self.track.lines[0]))
-        self.velocity = Vector2()
-        self.round = 0
-        self.next_waypoint = 0
-        self.cpu = 0
-        self.last_exception = None
-        self.waypoint_timing = []
+class CarPhysics:
+    def __init__(self, position: Transform, velocity: Vector2):
+        self.position = position
+        self.velocity = velocity
 
     def update(self, time: float, dt: float, throttle: float, steering_command: float):
         # constants
@@ -60,6 +38,46 @@ class CarInfo:
         # integrate velocity
         self.position.p += self.velocity * dt
         self.position.M *= Rotation.fromangle(steering_command * max_steering_speed * dt)
+
+
+class CarInfo:
+    def __init__(self, car_type: Car, track: Track):
+        # angle of the first section
+        starting_angle = (track.lines[1] - track.lines[0]).as_polar()[1]
+
+        self.car_type = car_type
+        self.track = track
+        self.car_physics = CarPhysics(Transform(Rotation.fromangle(radians(starting_angle)), deepcopy(track.lines[0])),
+                                      Vector2())
+        self.round = 0
+        self.next_waypoint = 0
+        self.cpu = 0
+        self.last_exception = None
+        self.waypoint_timing = []
+
+    @property
+    def position(self):
+        return self.car_physics.position
+
+    @property
+    def velocity(self):
+        return self.car_physics.velocity
+
+    def reset(self):
+        # angle of the first section
+        starting_angle = (self.track.lines[1] - self.track.lines[0]).as_polar()[1]
+
+        self.car_physics = CarPhysics(
+            Transform(Rotation.fromangle(radians(starting_angle)), deepcopy(self.track.lines[0])),
+            Vector2())
+        self.round = 0
+        self.next_waypoint = 0
+        self.cpu = 0
+        self.last_exception = None
+        self.waypoint_timing = []
+
+    def update(self, time: float, dt: float, throttle: float, steering_command: float):
+        self.car_physics.update(time, dt, throttle, steering_command)
 
         # Update next waypoint
         if (self.track.lines[self.next_waypoint] - self.position.p).length() < self.track.track_width:
