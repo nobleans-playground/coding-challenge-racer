@@ -21,7 +21,8 @@ class GameState:
         self.bots = {}  # type: Dict[Bot, CarInfo]
         self.frames = 0  # type: int # Number of frames since the start of the game
         for Bot in all_bots:
-            self.bots[Bot(deepcopy(self.track))] = CarInfo(Car(car1), self.track)
+            bot = Bot(deepcopy(self.track))
+            self.bots[bot] = CarInfo(Car.from_module(car1, bot.color), self.track)
 
     def reset(self):
         self.frames = 0

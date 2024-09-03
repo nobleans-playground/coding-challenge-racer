@@ -56,7 +56,7 @@ class Window:
             footprint = [car_footprint.elementwise() * v / 2 for v in
                          [Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1)]]
             footprint = [Transform(car_model.position.M, car_pos) * p for p in footprint]
-            pygame.draw.polygon(map_scaled, bot.color, footprint, 2)
+            # pygame.draw.polygon(map_scaled, bot.color, footprint, 2)
 
             # Draw a line from the car to the next waypoint
             next_waypoint_scaled = self.game_state.track.lines[car_model.next_waypoint] * zoom
