@@ -1,4 +1,4 @@
-# Coding Challenge: Multiplayer Racing Game [![Python application](https://github.com/Rayman/coding-challenge-racer/actions/workflows/python-app.yml/badge.svg)](https://github.com/Rayman/coding-challenge-racer/actions/workflows/python-app.yml)
+# Coding Challenge: Multiplayer Racing Game [![Python application](https://github.com/nobleans-playground/coding-challenge-racer/actions/workflows/python-app.yml/badge.svg)](https://github.com/nobleans-playground/coding-challenge-racer/actions/workflows/python-app.yml)
 
 ![Demo](./demo.gif)
 
@@ -63,14 +63,14 @@ You can follow the following steps to create your own bot.
 2. Create a personal repository where your bot will live.
    You can do this by clicking the "Use this template" button in [this repo](https://github.com/nobleans-playground/coding-challenge-racer-bot-template), or by forking the repository.
 3. Give your bot a name and add your own name as contributor
-   Notify an organizer @Rayman or @heinwessels to add your bot to the challenge as a submodule in the main repository.
+   Notify an organizer @nobleans-playground or @heinwessels to add your bot to the challenge as a submodule in the main repository.
    Note: Your bot doesn't have to be complete to be added, it simply needs to run and return a valid move.
    You can update/change/refactor your bot at any point during the challenge.
    Use this template" in  to create your own bot repository.
 
 ## How to start developing a bot
 
-1. Clone this repository using `git clone --recursive git@github.com:Rayman/coding-challenge-racer.git`.
+1. Clone this repository using `git clone --recursive git@github.com:nobleans-playground/coding-challenge-racer.git`.
    The `--recursive` is to pull in all submodule bots.
 2. Install all the dependencies
    - **On linux** `sudo apt install -y python3-numpy python3-pygame python3-tqdm`
