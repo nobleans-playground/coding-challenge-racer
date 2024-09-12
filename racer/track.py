@@ -9,8 +9,10 @@ class Track:
     def __init__(self, module=None):
         if module is None:
             return
+        size = module.background.get_size()
         self.name: str = module.name
-        self.background: Surface = pygame.transform.scale_by(module.background, (module.scale, module.scale))
+        self.background: Surface = pygame.transform.scale(module.background,
+                                                          (size[0] * module.scale, size[1] * module.scale))
         self.track_width: float = module.scale * module.track_width
         self.lines = [Vector2(line) * module.scale for line in module.lines]
 
