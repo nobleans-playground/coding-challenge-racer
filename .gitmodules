@@ -22,3 +22,6 @@
 [submodule "racer/bots/lewie"]
 	path = racer/bots/lewie
 	url = git@github.com:lewie-donckers/coding-challenge-racer-bot.git
+[submodule "racer/bots/mahmoud"]
+	path = racer/bots/mahmoud
+	url = git@github.com:Mahmoud1922/my_race_bot.git

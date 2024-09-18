@@ -6,6 +6,7 @@ from .jono import Lightyear
 from .richard import SimpleBot as LilRacer
 from .stefan import SimpleBot as StefanBot
 from .lewie import SimpleBot as LewieBot
+from .mahmoud import SimpleBot as MahmoudBot
 
 all_bots = [
     KeyboardBot,
@@ -15,5 +16,6 @@ all_bots = [
     Lightyear,
     LilRacer,
     StefanBot,
-    LewieBot
+    LewieBot,
+    MahmoudBot,
 ]
