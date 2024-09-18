@@ -17,7 +17,7 @@ Read [How to submit a bot](#how-to-submit-a-bot) to learn how to get started.
 
 On the command line, go to the folder where you have cloned this repository and run the following command:
 ```bash
-python3 gui.py
+python3 main.py
 ```
 For more information see the section [How to start developing a bot](#how-to-start-developing-a-bot).
 
@@ -73,9 +73,9 @@ You can follow the following steps to create your own bot.
 1. Clone this repository using `git clone --recursive git@github.com:nobleans-playground/coding-challenge-racer.git`.
    The `--recursive` is to pull in all submodule bots.
 2. Install all the dependencies
-   - **On linux** `sudo apt install -y python3-numpy python3-pygame python3-tqdm`
+   - **On linux** `sudo apt install -y python3-numpy python3-pygame python3-tqdm && pip3 install --user pygame_widgets --break-system-packages`
    - **On Windows** `pip install -r requirements.txt`
-3. Run `gui.py` or any of the other executables
+3. Run `main.py` or any of the other executables
 
 ## How to add your bot to the game
 
@@ -87,7 +87,7 @@ You can follow the following steps to create your own bot.
 ### Updating your local repository with the newest changes
 
 Over the course of the challenge your local repository might be out-of-date with all the other bots.
-To update the environent you can run the following two commands from the root folder.****
+To update the environment you can run the following two commands from the root folder.****
 
 ```sh
 # Pull the latest game-code
@@ -98,7 +98,7 @@ git submodule update --init
 
 ### Description of all the executables
 
-- **gui.py**:
-  Battle all bots against eachother in a graphical user interface.
+- **main.py**:
+  Battle all bots against each other in a graphical user interface.
 - **tournament.py**:
-  Battle all bots against eachother on the command line.
+  Battle all bots against each other on the command line.
