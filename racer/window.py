@@ -18,8 +18,9 @@ from .tracks import track1
 
 
 class Window:
-    def __init__(self, game_state: GameState):
+    def __init__(self, game_state, app):
         self.game_state = game_state
+        self.app = app
 
         # Create the window, saving it to a variable.
         self.window = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
@@ -32,6 +33,18 @@ class Window:
             self.window, 20, 20, 80, 30, text='Reset (R)', fontSize=20,
             inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
             onClick=lambda: self.game_state.reset()
+        )
+
+        self.pause_button = Button(
+            self.window, 110, 20, 80, 30, text='Pause (P)', fontSize=20,
+            inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
+            onClick=lambda: self.app.toggle_pause()
+        )
+
+        self.step_button = Button(
+            self.window, 200, 20, 80, 30, text='Step (S)', fontSize=20,
+            inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
+            onClick=lambda: self.app.do_step()
         )
 
     def draw(self, clock):
@@ -103,8 +116,16 @@ class Window:
 class App:
     def __init__(self):
         self.game_state = GameState(Track(track1))
-        self.window = Window(game_state=self.game_state)
+        self.window = Window(game_state=self.game_state, app=self)
         self.clock = pygame.time.Clock()
+        self.paused = False
+        self.step = False
+
+    def toggle_pause(self):
+        self.paused = not self.paused
+
+    def do_step(self):
+        self.step = True
 
     async def mainloop(self):
         run = True
@@ -118,9 +139,15 @@ class App:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_r:
                         self.game_state.reset()
+                    elif event.key == pygame.K_p:
+                        self.paused = not self.paused
+                    elif event.key == pygame.K_s:
+                        self.step = True
 
-            # Update the game
-            self.game_state.update(1 / framerate)
+            if not self.paused or self.step:
+                # Update the game
+                self.game_state.update(1 / framerate)
+                self.step = False
 
             # Draw the game
             self.clock.tick(framerate)
