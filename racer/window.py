@@ -29,7 +29,7 @@ class Window:
         self.map = self.game_state.track.background.convert()
 
         self.reset_button = Button(
-            self.window, 20, 20, 80, 30, text='Reset', fontSize=20,
+            self.window, 20, 20, 80, 30, text='Reset (R)', fontSize=20,
             inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
             onClick=lambda: self.game_state.reset()
         )
@@ -115,6 +115,9 @@ class App:
                     print('Quitting pygame')
                     pygame.quit()
                     return
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_r:
+                        self.game_state.reset()
 
             # Update the game
             self.game_state.update(1 / framerate)
