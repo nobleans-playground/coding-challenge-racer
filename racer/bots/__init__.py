@@ -9,6 +9,7 @@ from .lewie import Gonzales
 from .mahmoud import ComplicatedBot
 from .hein import ShadowFax
 from .paul import PaulBot
+from .mukunda import AutoSoori
 
 all_bots = [
     KeyboardBot,
@@ -22,4 +23,5 @@ all_bots = [
     ComplicatedBot,
     ShadowFax,
     PaulBot,
+    AutoSoori,
 ]

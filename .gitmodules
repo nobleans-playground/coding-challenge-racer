@@ -31,3 +31,6 @@
 [submodule "racer/bots/paul"]
 	path = racer/bots/paul
 	url = git@github.com:PaulVerhoeckx/pauls-racer.git
+[submodule "racer/bots/mukunda"]
+	path = racer/bots/mukunda
+	url = git@github.com:mbharatheesha/nobleo_racer.git
