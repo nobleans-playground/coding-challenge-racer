@@ -7,6 +7,7 @@ from .richard import LilRacer
 from .stefan import SimpleBot as StefanBot
 from .lewie import Gonzales
 from .mahmoud import SimpleBot as MahmoudBot
+from .hein import ShadowFax
 
 all_bots = [
     KeyboardBot,
@@ -18,4 +19,5 @@ all_bots = [
     StefanBot,
     Gonzales,
     MahmoudBot,
+    ShadowFax,
 ]
