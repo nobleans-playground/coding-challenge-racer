@@ -13,3 +13,12 @@
 [submodule "racer/bots/bram"]
 	path = racer/bots/bram
 	url = git@github.com:Vidicon/race_bot.git
+[submodule "racer/bots/stefan"]
+	path = racer/bots/stefan
+	url = git@github.com:stefanvdpalen/racing_bot.git
+[submodule "lewie"]
+	path = lewie
+	url = git@github.com:lewie-donckers/coding-challenge-racer-bot.git
+[submodule "racer/bots/lewie"]
+	path = racer/bots/lewie
+	url = git@github.com:lewie-donckers/coding-challenge-racer-bot.git
