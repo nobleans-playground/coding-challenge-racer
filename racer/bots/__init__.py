@@ -10,6 +10,8 @@ from .mahmoud import ComplicatedBot
 from .hein import ShadowFax
 from .paul import PaulBot
 from .mukunda import AutoSoori
+# from .rein.bot import ReinzorBot
+from .jerrel import DK
 
 all_bots = [
     KeyboardBot,
@@ -24,4 +26,6 @@ all_bots = [
     ShadowFax,
     PaulBot,
     AutoSoori,
+    # ReinzorBot,
+    DK,
 ]

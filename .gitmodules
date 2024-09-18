@@ -34,3 +34,9 @@
 [submodule "racer/bots/mukunda"]
 	path = racer/bots/mukunda
 	url = git@github.com:mbharatheesha/nobleo_racer.git
+[submodule "racer/bots/rein"]
+	path = racer/bots/rein
+	url = git@github.com:reinzor/coding-challenge-racer-reinzor-bot.git
+[submodule "racer/bots/jerrel"]
+	path = racer/bots/jerrel
+	url = git@github.com:Nobleaantje/DK.git
