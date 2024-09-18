@@ -3,9 +3,9 @@ from .keyboard_bot import KeyboardBot
 from .bram import BrumBot
 from .ivo import SimpleBot as IvoBot
 from .jono import Lightyear
-from .richard import SimpleBot as LilRacer
+from .richard import LilRacer
 from .stefan import SimpleBot as StefanBot
-from .lewie import SimpleBot as LewieBot
+from .lewie import Gonzales
 from .mahmoud import SimpleBot as MahmoudBot
 
 all_bots = [
@@ -16,6 +16,6 @@ all_bots = [
     Lightyear,
     LilRacer,
     StefanBot,
-    LewieBot,
+    Gonzales,
     MahmoudBot,
 ]
