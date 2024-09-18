@@ -47,6 +47,12 @@ class Window:
             onClick=lambda: self.app.do_step()
         )
 
+        self.fast_button = Button(
+            self.window, 290, 20, 80, 30, text='Fast (F)', fontSize=20,
+            inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
+            onClick=lambda: self.app.toggle_fast()
+        )
+
     def draw(self, clock):
         # scale map to full screen
         zoom = min(self.window.get_width() / self.map.get_width(), self.window.get_height() / self.map.get_height())
@@ -120,12 +126,16 @@ class App:
         self.clock = pygame.time.Clock()
         self.paused = False
         self.step = False
+        self.fast = False
 
     def toggle_pause(self):
         self.paused = not self.paused
 
     def do_step(self):
         self.step = True
+
+    def toggle_fast(self):
+        self.fast = not self.fast
 
     async def mainloop(self):
         run = True
@@ -140,9 +150,11 @@ class App:
                     if event.key == pygame.K_r:
                         self.game_state.reset()
                     elif event.key == pygame.K_p:
-                        self.paused = not self.paused
+                        self.toggle_pause()
                     elif event.key == pygame.K_s:
-                        self.step = True
+                        self.do_step()
+                    elif event.key == pygame.K_f:
+                        self.toggle_fast()
 
             if not self.paused or self.step:
                 # Update the game
@@ -150,7 +162,8 @@ class App:
                 self.step = False
 
             # Draw the game
-            self.clock.tick(framerate)
+            if not self.fast:
+                self.clock.tick(framerate)
             self.window.draw(self.clock)
             pygame_widgets.update(events)
             pygame.display.update()
