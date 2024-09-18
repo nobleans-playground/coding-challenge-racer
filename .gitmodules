@@ -1,3 +1,15 @@
 [submodule "racer/bots/example"]
 	path = racer/bots/example
 	url = git@github.com:nobleans-playground/coding-challenge-racer-bot-template.git
+[submodule "racer/bots/ivo"]
+	path = racer/bots/ivo
+	url = https://github.com/meltedpianoman/nobleo-racecar
+[submodule "racer/bots/jono"]
+	path = racer/bots/jono
+	url = git@github.com:JonathanGevers/coding-challenge-racecars.git
+[submodule "racer/bots/richard"]
+	path = racer/bots/richard
+	url = git@github.com:RichardvdK/lil-racer.git
+[submodule "racer/bots/bram"]
+	path = racer/bots/bram
+	url = git@github.com:Vidicon/race_bot.git
