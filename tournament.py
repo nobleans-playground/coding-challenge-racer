@@ -18,13 +18,32 @@ def main():
 
 
 def single_game():
+    rounds = 3
+    min_frames = 6000
+    frames_after_finish = 50000
+
     game_state = GameState(Track(track1))
-    for _ in tqdm.trange(0, 500):
+    finishing = False
+    for _ in tqdm.trange(0, min_frames):
         game_state.update(1 / framerate)
 
         for bot, car_info in game_state.bots.items():
-            if car_info.round >= 1:
-                return game_state
+            if car_info.round >= rounds:
+                finishing = True
+                break
+        if finishing:
+            break
+
+    for _ in tqdm.trange(0, frames_after_finish):
+        game_state.update(1 / framerate)
+
+    finish_index = rounds * len(game_state.track.lines) - 1
+    for bot, car_info in game_state.bots.items():
+        if finish_index < len(car_info.waypoint_timing):
+            finish_time = car_info.waypoint_timing[finish_index]
+            print(f'{bot.name} finished in {finish_time:.2f} seconds')
+        else:
+            print(f'{bot.name} did not finish')
 
     return game_state
 
