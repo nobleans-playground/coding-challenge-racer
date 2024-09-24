@@ -2,4 +2,5 @@ numpy
 pygame
 pygame_widgets
 pytest
+scipy
 tqdm

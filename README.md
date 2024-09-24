@@ -73,7 +73,7 @@ You can follow the following steps to create your own bot.
 1. Clone this repository using `git clone --recursive git@github.com:nobleans-playground/coding-challenge-racer.git`.
    The `--recursive` is to pull in all submodule bots.
 2. Install all the dependencies
-   - **On linux** `sudo apt install -y python3-numpy python3-pygame python3-tqdm && pip3 install --user pygame_widgets --break-system-packages`
+   - **On linux** `sudo apt install -y python3-numpy python3-pygame python3-scipy python3-tqdm && pip3 install --user pygame_widgets --break-system-packages`
    - **On Windows** `pip install -r requirements.txt`
 3. Run `main.py` or any of the other executables
 
