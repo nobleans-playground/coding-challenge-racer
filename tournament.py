@@ -33,7 +33,7 @@ def main():
 def single_game():
     rounds = 3
     min_frames = 6000
-    frames_after_finish = 50000
+    frames_after_finish = 25_000
 
     game_state = GameState(Track(track1))
     finishing = False
