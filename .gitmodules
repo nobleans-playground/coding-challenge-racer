@@ -43,3 +43,6 @@
 [submodule "racer/bots/matthijsfh"]
 	path = racer/bots/matthijsfh
 	url = git@github.com:matthijsfh/nobleo_racer.git
+[submodule "racer/bots/ferry"]
+	path = racer/bots/ferry
+	url = https://github.com/MCFurry/furstappen.git

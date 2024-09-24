@@ -13,6 +13,7 @@ from .mukunda import AutoSoori
 from .rein.bot import ReinzorBot
 from .jerrel import DK
 from .matthijsfh import MatthijsRacer
+from .ferry import FurStappen
 
 all_bots = [
     KeyboardBot,
@@ -30,4 +31,5 @@ all_bots = [
     ReinzorBot,
     DK,
     MatthijsRacer,
+    FurStappen,
 ]
