@@ -2,6 +2,26 @@
 
 ![Demo](./demo.gif)
 
+## Current rankings
+
+| Bot             | Contributor    |  Laps |  Speed |  CPU | CPU/t |
+|-----------------|----------------|------:|-------:|-----:|------:|
+| Gonzales        | Lewie          | 18.06 | 267.82 | 1.75 |  0.06 |
+| DK              | Jerrel         | 16.49 | 244.47 | 1.10 |  0.04 |
+| reinzor         | Rein           | 15.19 | 225.23 | 1.02 |  0.03 |
+| ShadowFax       | Hein           | 14.38 | 213.24 | 0.98 |  0.03 |
+| DaBullet        | MeltedPianoMan | 14.04 | 208.20 | 3.51 |  0.12 |
+| ComplicatedBot  | Mahmoud        | 13.85 | 205.36 | 1.00 |  0.03 |
+| AutoSoori       | Mukunda        | 11.79 | 174.76 | 0.96 |  0.03 |
+| BrumBot         | Brum           |  5.49 |  81.39 | 0.96 |  0.03 |
+| SimpleBot       | Nobleo         |  3.49 |  51.73 | 1.00 |  0.03 |
+| Lightyear       | Sam Altman     |  3.49 |  51.73 | 1.16 |  0.04 |
+| LilRacer        | Richard        |  3.49 |  51.73 | 0.99 |  0.03 |
+| Bottas          | Nobleo         |  3.49 |  51.73 | 0.97 |  0.03 |
+| MatthijsRacer   | Matthijs       |  3.49 |  51.73 | 0.99 |  0.03 |
+| ReverseEngineer | Paul           |  3.47 |  51.42 | 0.96 |  0.03 |
+| Player 1        | Nobleo         |  0.02 |   0.32 | 0.89 |  0.03 |
+
 ## Description
 
 The goal is to build a bot that is faster than all other bots.
