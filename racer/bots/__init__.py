@@ -12,6 +12,7 @@ from .paul import PaulBot
 from .mukunda import AutoSoori
 from .rein.bot import ReinzorBot
 from .jerrel import DK
+from .matthijsfh import MatthijsRacer
 
 all_bots = [
     KeyboardBot,
@@ -28,4 +29,5 @@ all_bots = [
     AutoSoori,
     ReinzorBot,
     DK,
+    MatthijsRacer,
 ]

@@ -40,3 +40,6 @@
 [submodule "racer/bots/jerrel"]
 	path = racer/bots/jerrel
 	url = git@github.com:Nobleaantje/DK.git
+[submodule "racer/bots/matthijsfh"]
+	path = racer/bots/matthijsfh
+	url = git@github.com:matthijsfh/nobleo_racer.git
