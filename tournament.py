@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from argparse import ArgumentParser
+import itertools
 
 import tqdm
 
@@ -9,12 +10,24 @@ from racer.track import Track
 from racer.tracks import track1
 
 
+def get_laps(car_info):
+    return car_info.round + (car_info.next_waypoint / len(car_info.track.lines))
+
 def main():
     game_state = single_game()
 
-    for bot, car_info in game_state.bots.items():
-        print(f'{bot.name} reached round {car_info.round} waypoint {car_info.next_waypoint} with {car_info.cpu:.2f} '
-              f'seconds of CPU time ({car_info.cpu * 1000 / game_state.frames:.2f} ms CPU/f)')
+    results = [(b, c, get_laps(c)) for b, c in game_state.bots.items()]
+    track_length = sum((v1 - v0).length() for v0, v1 in
+                       itertools.pairwise(game_state.track.lines + [game_state.track.lines[0]]))
+
+    print("Bot                  | Contributor      |   Laps | Speed (px/s) | CPU (s) | CPU/t (ms)")
+    print("---------------------|------------------|--------|--------------|---------|-----------")
+    format_str = "{:20} | {:16} | {:6.2f} | {:12.2f} | {:7.2f} | {:10.2f}"
+
+    for bot, car_info, laps in sorted(results, key=lambda r: r[2], reverse=True):
+        speed = (laps * track_length) / (game_state.frames / framerate)
+        cpu_per_tick = car_info.cpu * 1000 / game_state.frames
+        print(format_str.format(bot.name, bot.contributor, laps, speed, car_info.cpu, cpu_per_tick))
 
 
 def single_game():
