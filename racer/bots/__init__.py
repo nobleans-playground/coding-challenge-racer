@@ -1,19 +1,19 @@
-from .bram import BrumBot
 from .example import SimpleBot
-# from .ferry import FurStappen
-from .hein import ShadowFax
-from .ivo import DaBullet
-from .jerrel import DK
-from .jono import Lightyear
 from .keyboard_bot import KeyboardBot
-from .lewie import Gonzales
-from .mahmoud import ComplicatedBot
-from .matthijsfh import MatthijsRacer
-from .mukunda import AutoSoori
-from .paul import PaulBot
-from .rein.bot import ReinzorBot
+from .bram import BrumBot
+from .ivo import DaBullet
+from .jono import Lightyear
 from .richard import LilRacer
 from .stefan import Bottas
+from .lewie import Gonzales
+from .mahmoud import ComplicatedBot
+from .hein import ShadowFax
+from .paul import PaulBot
+from .mukunda import AutoSoori
+from .rein.bot import ReinzorBot
+from .jerrel import DK
+from .matthijsfh import MatthijsRacer
+from .ferry import FurStappen
 
 all_bots = [
     KeyboardBot,
@@ -31,5 +31,5 @@ all_bots = [
     ReinzorBot,
     DK,
     MatthijsRacer,
-    # FurStappen,  # ImportError:
+    FurStappen,
 ]
