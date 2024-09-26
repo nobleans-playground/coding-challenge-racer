@@ -14,6 +14,7 @@ from .rein.bot import ReinzorBot
 from .jerrel import DK
 from .matthijsfh import MatthijsRacer
 from .ferry import FurStappen
+from .rayman import RoadRunner
 
 all_bots = [
     KeyboardBot,
@@ -32,4 +33,5 @@ all_bots = [
     DK,
     MatthijsRacer,
     FurStappen,
+    RoadRunner,
 ]

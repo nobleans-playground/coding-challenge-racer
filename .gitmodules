@@ -46,3 +46,6 @@
 [submodule "racer/bots/ferry"]
 	path = racer/bots/ferry
 	url = https://github.com/MCFurry/furstappen.git
+[submodule "racer/bots/rayman"]
+	path = racer/bots/rayman
+	url = git@github.com:Rayman/coding-challenge-racer-bot.git
