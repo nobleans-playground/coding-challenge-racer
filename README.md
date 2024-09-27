@@ -6,21 +6,22 @@
 
 | Bot             | Contributor    |  Laps |  Speed |  CPU | CPU/t |
 |-----------------|----------------|------:|-------:|-----:|------:|
-| Gonzales        | Lewie          | 18.06 | 267.82 | 1.75 |  0.06 |
-| DK              | Jerrel         | 16.49 | 244.47 | 1.10 |  0.04 |
-| reinzor         | Rein           | 15.19 | 225.23 | 1.02 |  0.03 |
-| ShadowFax       | Hein           | 14.38 | 213.24 | 0.98 |  0.03 |
-| DaBullet        | MeltedPianoMan | 14.04 | 208.20 | 3.51 |  0.12 |
-| ComplicatedBot  | Mahmoud        | 13.85 | 205.36 | 1.00 |  0.03 |
-| AutoSoori       | Mukunda        | 11.79 | 174.76 | 0.96 |  0.03 |
-| BrumBot         | Brum           |  5.49 |  81.39 | 0.96 |  0.03 |
-| SimpleBot       | Nobleo         |  3.49 |  51.73 | 1.00 |  0.03 |
-| Lightyear       | Sam Altman     |  3.49 |  51.73 | 1.16 |  0.04 |
-| LilRacer        | Richard        |  3.49 |  51.73 | 0.99 |  0.03 |
-| Bottas          | Nobleo         |  3.49 |  51.73 | 0.97 |  0.03 |
-| MatthijsRacer   | Matthijs       |  3.49 |  51.73 | 0.99 |  0.03 |
-| ReverseEngineer | Paul           |  3.47 |  51.42 | 0.96 |  0.03 |
-| Player 1        | Nobleo         |  0.02 |   0.32 | 0.89 |  0.03 |
+| Gonzales        | Lewie          | 18.06 | 267.82 | 1.89 |  0.06 |
+| CaravanRacer    | Matthijs       | 17.66 | 261.82 | 1.41 |  0.05 |
+| DK              | Jerrel         | 16.49 | 244.47 | 1.15 |  0.04 |
+| FurStappen      | Ferry          | 15.87 | 235.32 | 1.22 |  0.04 |
+| reinzor         | Rein           | 15.19 | 225.23 | 1.07 |  0.04 |
+| ShadowFax       | Hein           | 14.38 | 213.24 | 1.02 |  0.03 |
+| DaBullet        | MeltedPianoMan | 14.04 | 208.20 | 3.82 |  0.13 |
+| ComplicatedBot  | Mahmoud        | 13.85 | 205.36 | 1.05 |  0.04 |
+| AutoSoori       | Mukunda        | 11.79 | 174.76 | 1.01 |  0.03 |
+| BrumBot         | Brum           |  5.49 |  81.39 | 1.01 |  0.03 |
+| SimpleBot       | Nobleo         |  3.49 |  51.73 | 1.01 |  0.03 |
+| Lightyear       | Sam Altman     |  3.49 |  51.73 | 1.23 |  0.04 |
+| LilRacer        | Richard        |  3.49 |  51.73 | 1.04 |  0.03 |
+| Bottas          | Nobleo         |  3.49 |  51.73 | 1.03 |  0.03 |
+| ReverseEngineer | Paul           |  3.47 |  51.42 | 1.00 |  0.03 |
+| Player 1        | Nobleo         |  0.02 |   0.32 | 0.95 |  0.03 |
 
 ## Description
 
