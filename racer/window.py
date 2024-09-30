@@ -3,6 +3,7 @@
 
 import asyncio
 from math import degrees
+import time
 
 import pygame
 import pygame_widgets
@@ -51,6 +52,12 @@ class Window:
             self.window, 290, 20, 80, 30, text='Fast (F)', fontSize=20,
             inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
             onClick=lambda: self.app.toggle_fast()
+        )
+
+        self.present_button = Button(
+            self.window, 380, 20, 120, 30, text='Present (off)', fontSize=20,
+            inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
+            onClick=lambda: self.app.toggle_present()
         )
 
     def draw(self, clock):
@@ -121,12 +128,14 @@ class Window:
 
 class App:
     def __init__(self):
-        self.game_state = GameState(Track(track1))
-        self.window = Window(game_state=self.game_state, app=self)
-        self.clock = pygame.time.Clock()
         self.paused = False
         self.step = False
         self.fast = False
+        self.present = False
+
+        self.game_state = GameState(Track(track1))
+        self.window = Window(game_state=self.game_state, app=self)
+        self.clock = pygame.time.Clock()
 
     def toggle_pause(self):
         self.paused = not self.paused
@@ -137,8 +146,13 @@ class App:
     def toggle_fast(self):
         self.fast = not self.fast
 
+    def toggle_present(self):
+        self.present = not self.present
+        self.window.present_button.setText(f'Present ({"on" if self.present else "off"})')
+
     async def mainloop(self):
         run = True
+        next_reset = None
         while run:
             events = pygame.event.get()
             for event in events:
@@ -155,6 +169,12 @@ class App:
                         self.do_step()
                     elif event.key == pygame.K_f:
                         self.toggle_fast()
+            
+            if not next_reset and self.present:
+                next_reset = time.time() + (60 * 2)
+            elif self.present and time.time() > next_reset:
+                self.game_state.reset()
+                next_reset = None
 
             if not self.paused or self.step:
                 # Update the game

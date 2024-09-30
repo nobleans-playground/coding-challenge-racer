@@ -18,16 +18,19 @@ def clamp(v: float, lo: float, hi: float):
 class GameState:
     def __init__(self, track: Track):
         self.track = track
-        self.bots = {}  # type: Dict[Bot, CarInfo]
         self.frames = 0  # type: int # Number of frames since the start of the game
+        self.initialize_bots()
+
+    def initialize_bots(self):
+        # Deconstructs all cars and recreate them so any internal logic is correctly reset
+        self.bots = {}  # type: Dict[Bot, CarInfo]
         for Bot in all_bots:
             bot = Bot(deepcopy(self.track))
             self.bots[bot] = CarInfo(Car.from_module(car1, bot.color), self.track)
 
     def reset(self):
         self.frames = 0
-        for bot, car_info in self.bots.items():
-            car_info.reset()
+        self.initialize_bots()
 
     def update(self, dt: float):
         self.frames += 1
