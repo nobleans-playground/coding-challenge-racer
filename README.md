@@ -104,7 +104,7 @@ _Note: Your bot doesn't have to be complete to be added, it simply needs to run 
   See [racer/bots/example/bot.py](https://github.com/nobleans-playground/coding-challenge-racer-bot-template/blob/main/bot.py) for inspiration.
 - If you bot has been added to the main repository, just edit the files in your own bots folder.
 
-### Updating your local repository with the newest changes
+## Updating your local repository with the newest changes
 
 Over the course of the challenge your local repository might be out-of-date with all the other bots.
 To update the environment you can run the following two commands from the root folder.****
@@ -116,7 +116,7 @@ git pull
 git submodule update --init
 ```
 
-### Description of all the executables
+## Description of all the executables
 
 - **main.py**:
   Battle all bots against each other in a graphical user interface.
