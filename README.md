@@ -84,10 +84,9 @@ You can follow the following steps to create your own bot.
 2. Create a personal repository where your bot will live.
    You can do this by clicking the "Use this template" button in [this repo](https://github.com/nobleans-playground/coding-challenge-racer-bot-template), or by forking the repository.
 3. Give your bot a name and add your own name as contributor
-   Notify an organizer @nobleans-playground or @heinwessels to add your bot to the challenge as a submodule in the main repository.
-   Note: Your bot doesn't have to be complete to be added, it simply needs to run and return a valid move.
-   You can update/change/refactor your bot at any point during the challenge.
-   Use this template" in  to create your own bot repository.
+4. Notify an organizer @nobleans-playground or @heinwessels to add your bot to the challenge as a submodule in the main repository.
+
+_Note: Your bot doesn't have to be complete to be added, it simply needs to run and return a valid move. You can update/change/refactor your bot at any point during the challenge._
 
 ## How to start developing a bot
 
