@@ -1,7 +1,7 @@
 from copy import deepcopy
 from time import time
 from traceback import print_exception
-from typing import Dict
+from typing import Dict, List
 
 from .bot import Bot
 from .bots import all_bots
@@ -66,8 +66,10 @@ class GameState:
         cpu = time() - start
         return result, cpu
 
-    def ranked(self) -> Dict[Bot, float]:
+    def ranked(self) -> List[Bot]:
         # Search for the car_info with the longest waypoint_timing
         bots = list(self.bots.keys())
-        bots.sort(key=lambda bot: (self.bots[bot].round, self.bots[bot].next_waypoint), reverse=True)
+        bots.sort(
+            key=lambda bot: (self.bots[bot].round, self.bots[bot].next_waypoint, -self.bots[bot].waypoint_timing[-1]),
+            reverse=True)
         return bots
