@@ -1,5 +1,4 @@
 from copy import deepcopy
-from math import radians
 
 from pygame.math import Vector2
 
@@ -66,19 +65,6 @@ class CarInfo:
     @property
     def velocity(self) -> Vector2:
         return self.car_physics.velocity
-
-    def reset(self):
-        # angle of the first section
-        starting_angle = (self.track.lines[1] - self.track.lines[0]).as_polar()[1]
-
-        self.car_physics = CarPhysics(
-            Transform(Rotation.fromangle(radians(starting_angle)), deepcopy(self.track.lines[0])),
-            Vector2())
-        self.round = 0
-        self.next_waypoint = 0
-        self.cpu = 0
-        self.last_exception = None
-        self.waypoint_timing = []
 
     def update(self, time: float, dt: float, throttle: float, steering_command: float):
         self.car_physics.update(dt, throttle, steering_command)
