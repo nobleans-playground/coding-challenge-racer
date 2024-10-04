@@ -49,3 +49,6 @@
 [submodule "racer/bots/rayman"]
 	path = racer/bots/rayman
 	url = git@github.com:Rayman/coding-challenge-racer-bot.git
+[submodule "racer/bots/daniel"]
+	path = racer/bots/daniel
+	url = git@github.com:danielpijnenborg/racer_bot.git
