@@ -2,20 +2,23 @@
 
 
 import asyncio
-from math import degrees
 import time
+from math import degrees
 
 import pygame
 import pygame_widgets
 from pygame import Color
 from pygame.math import Vector2
 from pygame_widgets.button import Button
+from pygame_widgets.dropdown import Dropdown
 
 from .constants import framerate
 from .game_state import GameState
 from .linear_math import Transform
 from .track import Track
-from .tracks import track1
+from .tracks import all_tracks
+
+starting_track = all_tracks[0]
 
 
 class Window:
@@ -58,6 +61,13 @@ class Window:
             self.window, 380, 20, 120, 30, text='Present (off)', fontSize=20,
             inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
             onClick=lambda: self.app.toggle_present()
+        )
+
+        map_names = [track.name for track in all_tracks]
+        self.map_dropdown = Dropdown(
+            self.window, 510, 20, 120, 30, name='Switch track',
+            choices=map_names, fontSize=20,
+            inactiveColour=(255, 0, 0), hoverColour=(255, 0, 0), pressedColour=(255, 0, 0),
         )
 
     def draw(self, clock):
@@ -125,6 +135,16 @@ class Window:
             text = self.font.render(f'{behind:+.2f}', True, Color('white'))
             self.window.blit(text, (self.window.get_width() - 50, offset_from_top + i * 20))
 
+    def selected_track(self):
+        name = self.map_dropdown.getSelected()
+        if name is None:
+            return None
+        return next(track for track in all_tracks if track.name == name)
+
+    def reload_track(self):
+        self.map = self.game_state.track.background.convert()
+        self.map_dropdown.reset()
+
 
 class App:
     def __init__(self):
@@ -133,7 +153,7 @@ class App:
         self.fast = False
         self.present = False
 
-        self.game_state = GameState(Track(track1))
+        self.game_state = GameState(Track(starting_track))
         self.window = Window(game_state=self.game_state, app=self)
         self.clock = pygame.time.Clock()
 
@@ -169,12 +189,18 @@ class App:
                         self.do_step()
                     elif event.key == pygame.K_f:
                         self.toggle_fast()
-            
+
             if not next_reset and self.present:
                 next_reset = time.time() + (60 * 2)
             elif self.present and time.time() > next_reset:
                 self.game_state.reset()
                 next_reset = None
+
+            if self.window.selected_track() != None and self.window.selected_track() != self.game_state.track:
+                print(f'Switching to track {self.window.selected_track().name}')
+                self.game_state = GameState(Track(self.window.selected_track()))
+                self.window.game_state = self.game_state
+                self.window.reload_track()
 
             if not self.paused or self.step:
                 # Update the game

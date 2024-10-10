@@ -3,7 +3,7 @@ import os.path
 
 import pygame
 
-name = 'track2.svg'
+name = 'Evergreen Ridge'
 background = pygame.image.load(os.path.splitext(__file__)[0] + '.webp')
 scale = 1
 track_width = 30

@@ -3,7 +3,7 @@ import os.path
 
 import pygame
 
-name = 'track1.svg'
+name = "Imposter's circuit"
 background = pygame.image.load(os.path.splitext(__file__)[0] + '.jpg')
 scale = 2
 track_width = 15
