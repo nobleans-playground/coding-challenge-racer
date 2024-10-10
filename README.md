@@ -4,6 +4,8 @@
 
 ## Current rankings
 
+## Imposter's circuit
+
 | Name            | Contributor    | Finish time |  Speed | CPU | CPU/t |
 |-----------------|----------------|------------:|-------:|----:|------:|
 | CaravanRacer    | Matthijs       |      81.150 | 273.14 | 1.3 |   0.0 |
@@ -23,6 +25,29 @@
 | Lightyear       | Sam Altman     |     421.367 |  52.60 | 1.1 |   0.0 |
 | SimpleBot       | Nobleo         |     421.367 |  52.60 | 0.9 |   0.0 |
 | ReverseEngineer | Paul           |     422.233 |  52.49 | 0.9 |   0.0 |
+| Player 1        | Nobleo         |         NaN |    NaN | 0.9 |   0.0 |
+
+## Evergreen Ridge
+
+| Name            | Contributor    | Finish time |  Speed | CPU | CPU/t |
+|-----------------|----------------|------------:|-------:|----:|------:|
+| Gonzales        | Lewie          |      75.317 | 235.29 | 1.6 |   0.1 |
+| CaravanRacer    | Matthijs       |      75.550 | 234.56 | 1.3 |   0.0 |
+| DK              | Jerrel         |      90.483 | 195.85 | 1.0 |   0.0 |
+| Racinator       | Daniel         |      93.667 | 189.19 | 1.0 |   0.0 |
+| FurStappen      | Ferry          |      94.833 | 186.87 | 1.1 |   0.0 |
+| Road Runner     | Rayman [NC]    |      95.000 | 186.54 | 1.0 |   0.0 |
+| AutoSoori       | Mukunda        |      98.133 | 180.58 | 0.9 |   0.0 |
+| DaBullet        | MeltedPianoMan |     103.150 | 171.80 | 3.5 |   0.1 |
+| ComplicatedBot  | Mahmoud        |     107.250 | 165.23 | 0.9 |   0.0 |
+| ShadowFax       | Hein [NC]      |     118.783 | 149.19 | 0.9 |   0.0 |
+| BrumBot         | Brum           |     119.017 | 148.90 | 2.2 |   0.1 |
+| reinzor         | Rein           |     167.250 | 105.96 | 0.9 |   0.0 |
+| Bottas          | Nobleo         |     329.967 |  53.71 | 0.9 |   0.0 |
+| LilRacer        | Richard        |     329.967 |  53.71 | 0.9 |   0.0 |
+| Lightyear       | Sam Altman     |     329.967 |  53.71 | 1.1 |   0.0 |
+| SimpleBot       | Nobleo         |     329.967 |  53.71 | 0.9 |   0.0 |
+| ReverseEngineer | Paul           |     330.717 |  53.58 | 0.9 |   0.0 |
 | Player 1        | Nobleo         |         NaN |    NaN | 0.9 |   0.0 |
 
 ## Description
