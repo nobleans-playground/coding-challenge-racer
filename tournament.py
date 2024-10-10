@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-from argparse import ArgumentParser
 import itertools
+from argparse import ArgumentParser
 
+import pygame
 import tqdm
 
 from racer.constants import framerate
@@ -13,7 +14,9 @@ from racer.tracks import track1
 def get_laps(car_info):
     return car_info.round + (car_info.next_waypoint / len(car_info.track.lines))
 
+
 def main():
+    pygame.init()
     game_state = single_game()
 
     results = [(b, c, get_laps(c)) for b, c in game_state.bots.items()]
