@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
-import itertools
+import csv
+import os
 from argparse import ArgumentParser
+from datetime import datetime, UTC
+from itertools import pairwise
+from tempfile import gettempdir
 
+import pandas
 import pygame
 import tqdm
 
 from racer.constants import framerate
 from racer.game_state import GameState
 from racer.track import Track
-from racer.tracks import track1
+from racer.tracks import all_tracks, track1
+
+rounds = 3
 
 
 def get_laps(car_info):
@@ -17,24 +24,37 @@ def get_laps(car_info):
 
 def main():
     pygame.init()
-    game_state = single_game()
 
-    results = [(b, c, get_laps(c)) for b, c in game_state.bots.items()]
-    track_length = sum((v1 - v0).length() for v0, v1 in
-                       itertools.pairwise(game_state.track.lines + [game_state.track.lines[0]]))
+    # write to a temporary file so that we have partial scores in case of a crash
+    filename = f'racer_{datetime.now(UTC).strftime("%Y-%m-%d_%H-%M-%S")}'
+    with open(os.path.join(gettempdir(), filename), 'w+') as f:
+        print(f'writing game results to {f.name}')
+        writer = csv.DictWriter(f, fieldnames=['Name', 'Contributor', 'Finish time', 'Frames', 'CPU', 'Track'])
 
-    print("Bot                  | Contributor      |   Laps | Speed (px/s) | CPU (s) | CPU/t (ms)")
-    print("---------------------|------------------|--------|--------------|---------|-----------")
-    format_str = "{:20} | {:16} | {:6.2f} | {:12.2f} | {:7.2f} | {:10.2f}"
+        rows = single_game()
 
-    for bot, car_info, laps in sorted(results, key=lambda r: r[2], reverse=True):
-        speed = (laps * track_length) / (game_state.frames / framerate)
-        cpu_per_tick = car_info.cpu * 1000 / game_state.frames
-        print(format_str.format(bot.name, bot.contributor, laps, speed, car_info.cpu, cpu_per_tick))
+        writer.writeheader()
+        writer.writerows(rows)
+
+        f.seek(0)
+        df = pandas.read_csv(f)
+
+        track = next(Track(t) for t in all_tracks if t.name == df['Track'][0])
+        track_length = sum((v1 - v0).length() for v0, v1 in pairwise(track.lines + [track.lines[0]]))
+
+        df['CPU/t'] = df['CPU'] / df['Frames'] * 1000
+        df['Speed'] = track_length * rounds / df['Finish time']
+
+        # Reorder columns
+        df = df[['Name', 'Contributor', 'Finish time', 'Speed', 'CPU', 'CPU/t', 'Track']]
+
+        df.sort_values(by='Finish time', inplace=True)
+        print()
+        print(df.to_string(formatters={'Finish time': '{:.3f}'.format, 'Speed': '{:.2f}'.format, 'CPU': '{:.1f}'.format,
+                                       'CPU/t': '{:.1f}'.format}, index=False))
 
 
 def single_game():
-    rounds = 3
     min_frames = 6000
     frames_after_finish = 25_000
 
@@ -54,14 +74,23 @@ def single_game():
         game_state.update(1 / framerate)
 
     finish_index = rounds * len(game_state.track.lines) - 1
+    rows = []
     for bot, car_info in game_state.bots.items():
+        row = {
+            'Name': bot.name,
+            'Contributor': bot.contributor,
+            'CPU': car_info.cpu,
+            'Frames': game_state.frames,
+            'Track': game_state.track.name,
+        }
+
         if finish_index < len(car_info.waypoint_timing):
             finish_time = car_info.waypoint_timing[finish_index]
-            print(f'{bot.name} finished in {finish_time:.2f} seconds')
+            row['Finish time'] = finish_time
         else:
-            print(f'{bot.name} did not finish')
-
-    return game_state
+            row['Finish time'] = None
+        rows.append(row)
+    return rows
 
 
 if __name__ == '__main__':
