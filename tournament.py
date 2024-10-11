@@ -13,7 +13,7 @@ import tqdm
 from racer.constants import framerate
 from racer.game_state import GameState
 from racer.track import Track
-from racer.tracks import all_tracks, track1
+from racer.tracks import all_tracks
 
 rounds = 3
 
@@ -22,8 +22,10 @@ def get_laps(car_info):
     return car_info.round + (car_info.next_waypoint / len(car_info.track.lines))
 
 
-def main():
+def main(track):
     pygame.init()
+
+    track = Track(next(t for t in all_tracks if t.name == track))
 
     # write to a temporary file so that we have partial scores in case of a crash
     filename = f'racer_{datetime.now(UTC).strftime("%Y-%m-%d_%H-%M-%S")}'
@@ -31,7 +33,7 @@ def main():
         print(f'writing game results to {f.name}')
         writer = csv.DictWriter(f, fieldnames=['Name', 'Contributor', 'Finish time', 'Frames', 'CPU', 'Track'])
 
-        rows = single_game()
+        rows = single_game(track)
 
         writer.writeheader()
         writer.writerows(rows)
@@ -54,11 +56,11 @@ def main():
                                        'CPU/t': '{:.1f}'.format}, index=False))
 
 
-def single_game():
+def single_game(track):
     min_frames = 6000
     frames_after_finish = 25_000
 
-    game_state = GameState(Track(track1))
+    game_state = GameState(track)
     finishing = False
     for _ in tqdm.trange(0, min_frames):
         game_state.update(1 / framerate)
@@ -95,6 +97,7 @@ def single_game():
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Run a tournament of the coding challenge racer')
+    parser.add_argument('track', choices=[t.name for t in all_tracks], help='The track to run the tournament on')
     args = parser.parse_args()
 
     try:
