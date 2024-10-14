@@ -2,7 +2,7 @@
 import csv
 import os
 from argparse import ArgumentParser
-from datetime import datetime, UTC
+from datetime import datetime
 from itertools import pairwise
 from tempfile import gettempdir
 
@@ -28,7 +28,7 @@ def main(track):
     track = Track(next(t for t in all_tracks if t.name == track))
 
     # write to a temporary file so that we have partial scores in case of a crash
-    filename = f'racer_{datetime.now(UTC).strftime("%Y-%m-%d_%H-%M-%S")}'
+    filename = f'racer_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}'
     with open(os.path.join(gettempdir(), filename), 'w+') as f:
         print(f'writing game results to {f.name}')
         writer = csv.DictWriter(f, fieldnames=['Name', 'Contributor', 'Finish time', 'Frames', 'CPU', 'Track'])
