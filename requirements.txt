@@ -1,4 +1,5 @@
 numpy
+pandas
 pygame
 pygame_widgets
 pytest
