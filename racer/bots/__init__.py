@@ -13,7 +13,7 @@ from .mukunda import AutoSoori
 from .rein.bot import ReinzorBot
 from .jerrel import DK
 from .matthijsfh import MatthijsRacer
-from .ferry import FurStappen
+from .ferry import FurStappen, Schummi
 from .rayman import RoadRunner
 from .daniel import Racinator
 
@@ -34,6 +34,7 @@ all_bots = [
     DK,
     MatthijsRacer,
     FurStappen,
+    Schummi,
     RoadRunner,
     Racinator,
 ]
