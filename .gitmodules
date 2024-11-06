@@ -52,3 +52,6 @@
 [submodule "racer/bots/daniel"]
 	path = racer/bots/daniel
 	url = git@github.com:danielpijnenborg/racer_bot.git
+[submodule "racer/bots/gitplant"]
+	path = racer/bots/gitplant
+	url = git@github.com:Gitplant/racer-bot-lombardi.git

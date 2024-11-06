@@ -16,6 +16,7 @@ from .matthijsfh import MatthijsRacer
 from .ferry import FurStappen, Schummi
 from .rayman import RoadRunner
 from .daniel import Racinator
+from .gitplant import Lombardi
 
 all_bots = [
     KeyboardBot,
@@ -37,4 +38,5 @@ all_bots = [
     Schummi,
     RoadRunner,
     Racinator,
+    Lombardi,
 ]
