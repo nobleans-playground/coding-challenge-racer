@@ -8,47 +8,51 @@
 
 | Name            | Contributor    | Finish time |  Speed | CPU | CPU/t |
 |-----------------|----------------|------------:|-------:|----:|------:|
-| CaravanRacer    | Matthijs       |      80.700 | 274.66 | 2.8 |   0.1 |
-| Gonzales        | Lewie          |      81.667 | 271.41 | 3.4 |   0.1 |
-| Road Runner     | Rayman [NC]    |      85.000 | 260.76 | 2.3 |   0.1 |
-| BrumBot         | Brum           |      88.000 | 251.87 | 5.0 |   0.2 |
-| DK              | Jerrel         |      89.467 | 247.75 | 2.1 |   0.1 |
-| FurStappen      | Ferry          |      94.333 | 234.96 | 2.3 |   0.1 |
-| reinzor         | Rein           |     100.867 | 219.75 | 2.0 |   0.1 |
-| ShadowFax       | Hein [NC]      |     101.617 | 218.12 | 1.9 |   0.1 |
-| Racinator       | Daniel         |     103.933 | 213.26 | 2.1 |   0.1 |
-| DaBullet        | MeltedPianoMan |     105.317 | 210.46 | 7.1 |   0.2 |
-| ComplicatedBot  | Mahmoud        |     106.600 | 207.93 | 2.0 |   0.1 |
-| AutoSoori       | Mukunda        |     125.517 | 176.59 | 1.9 |   0.1 |
-| Bottas          | Nobleo         |     421.367 |  52.60 | 1.9 |   0.1 |
-| LilRacer        | Richard        |     421.367 |  52.60 | 2.0 |   0.1 |
-| Lightyear       | Sam Altman     |     421.367 |  52.60 | 2.3 |   0.1 |
-| SimpleBot       | Nobleo         |     421.367 |  52.60 | 1.9 |   0.1 |
-| ReverseEngineer | Paul           |     422.233 |  52.49 | 1.9 |   0.1 |
-| Player 1        | Nobleo         |         NaN |    NaN | 2.0 |   0.1 |
+| CaravanRacer    | Matthijs       |      80.700 | 274.66 | 1.4 |   0.0 |
+| Gonzales        | Lewie          |      81.667 | 271.41 | 1.7 |   0.1 |
+| Schummi         | Ferry          |      83.050 | 266.89 | 1.1 |   0.0 |
+| Road Runner     | Rayman [NC]    |      85.000 | 260.76 | 1.2 |   0.0 |
+| BrumBot         | Brum           |      88.000 | 251.87 | 2.5 |   0.1 |
+| DK              | Jerrel         |      89.467 | 247.75 | 1.1 |   0.0 |
+| FurStappen      | Ferry          |      93.267 | 237.65 | 1.2 |   0.0 |
+| reinzor         | Rein           |     100.867 | 219.75 | 1.0 |   0.0 |
+| ShadowFax       | Hein [NC]      |     101.617 | 218.12 | 0.9 |   0.0 |
+| Racinator       | Daniel         |     103.933 | 213.26 | 1.1 |   0.0 |
+| DaBullet        | MeltedPianoMan |     105.317 | 210.46 | 3.6 |   0.1 |
+| ComplicatedBot  | Mahmoud        |     106.600 | 207.93 | 1.0 |   0.0 |
+| Lombardi        | Gitplant       |     110.450 | 200.68 | 1.2 |   0.0 |
+| AutoSoori       | Mukunda        |     125.517 | 176.59 | 0.9 |   0.0 |
+| SimpleBot       | Nobleo         |     421.367 |  52.60 | 0.9 |   0.0 |
+| LilRacer        | Richard        |     421.367 |  52.60 | 1.0 |   0.0 |
+| Lightyear       | Sam Altman     |     421.367 |  52.60 | 1.2 |   0.0 |
+| Bottas          | Nobleo         |     421.367 |  52.60 | 1.0 |   0.0 |
+| ReverseEngineer | Paul           |     422.233 |  52.49 | 0.9 |   0.0 |
+| Player 1        | Nobleo         |         NaN |    NaN | 1.0 |   0.0 |
 
 ## Evergreen Ridge
 
 | Name            | Contributor    | Finish time |  Speed | CPU | CPU/t |
 |-----------------|----------------|------------:|-------:|----:|------:|
-| CaravanRacer    | Matthijs       |      74.367 | 238.29 | 2.9 |   0.1 |
-| Gonzales        | Lewie          |      75.317 | 235.29 | 3.5 |   0.1 |
-| Road Runner     | Rayman [NC]    |      81.433 | 217.61 | 2.4 |   0.1 |
-| reinzor         | Rein           |      89.567 | 197.85 | 2.0 |   0.1 |
-| DK              | Jerrel         |      90.483 | 195.85 | 2.2 |   0.1 |
-| Racinator       | Daniel         |      93.667 | 189.19 | 2.2 |   0.1 |
-| FurStappen      | Ferry          |      94.833 | 186.87 | 2.3 |   0.1 |
-| AutoSoori       | Mukunda        |      98.133 | 180.58 | 1.9 |   0.1 |
-| DaBullet        | MeltedPianoMan |     103.150 | 171.80 | 7.4 |   0.3 |
-| ComplicatedBot  | Mahmoud        |     107.250 | 165.23 | 2.0 |   0.1 |
-| ShadowFax       | Hein [NC]      |     118.783 | 149.19 | 1.9 |   0.1 |
-| BrumBot         | Brum           |     119.017 | 148.90 | 5.0 |   0.2 |
-| Bottas          | Nobleo         |     329.967 |  53.71 | 2.0 |   0.1 |
-| LilRacer        | Richard        |     329.967 |  53.71 | 2.0 |   0.1 |
-| Lightyear       | Sam Altman     |     329.967 |  53.71 | 2.4 |   0.1 |
-| SimpleBot       | Nobleo         |     329.967 |  53.71 | 1.9 |   0.1 |
-| ReverseEngineer | Paul           |     330.717 |  53.58 | 1.9 |   0.1 |
-| Player 1        | Nobleo         |         NaN |    NaN | 2.0 |   0.1 |
+| Schummi         | Ferry          |      72.083 | 245.84 | 1.1 |   0.0 |
+| CaravanRacer    | Matthijs       |      74.367 | 238.29 | 1.5 |   0.0 |
+| Gonzales        | Lewie          |      75.317 | 235.29 | 1.7 |   0.1 |
+| Road Runner     | Rayman [NC]    |      81.433 | 217.61 | 1.2 |   0.0 |
+| reinzor         | Rein           |      89.567 | 197.85 | 1.0 |   0.0 |
+| Lombardi        | Gitplant       |      89.583 | 197.82 | 1.2 |   0.0 |
+| DK              | Jerrel         |      90.483 | 195.85 | 1.1 |   0.0 |
+| Racinator       | Daniel         |      93.667 | 189.19 | 1.1 |   0.0 |
+| FurStappen      | Ferry          |      94.283 | 187.96 | 1.2 |   0.0 |
+| AutoSoori       | Mukunda        |      98.133 | 180.58 | 0.9 |   0.0 |
+| DaBullet        | MeltedPianoMan |     103.150 | 171.80 | 3.8 |   0.1 |
+| ComplicatedBot  | Mahmoud        |     107.250 | 165.23 | 1.0 |   0.0 |
+| ShadowFax       | Hein [NC]      |     118.783 | 149.19 | 1.0 |   0.0 |
+| BrumBot         | Brum           |     119.017 | 148.90 | 2.6 |   0.1 |
+| SimpleBot       | Nobleo         |     329.967 |  53.71 | 1.0 |   0.0 |
+| LilRacer        | Richard        |     329.967 |  53.71 | 1.0 |   0.0 |
+| Lightyear       | Sam Altman     |     329.967 |  53.71 | 1.2 |   0.0 |
+| Bottas          | Nobleo         |     329.967 |  53.71 | 1.0 |   0.0 |
+| ReverseEngineer | Paul           |     330.717 |  53.58 | 0.9 |   0.0 |
+| Player 1        | Nobleo         |         NaN |    NaN | 1.0 |   0.0 |
 
 ## Description
 
