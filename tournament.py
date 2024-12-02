@@ -10,12 +10,10 @@ import pandas
 import pygame
 import tqdm
 
-from racer.constants import framerate
+from racer.constants import framerate, rounds
 from racer.game_state import GameState
 from racer.track import Track
 from racer.tracks import all_tracks
-
-rounds = 3
 
 
 def get_laps(car_info):
