@@ -44,13 +44,13 @@ class CarPhysics:
 class CarInfo:
     def __init__(self, car_type: Car, track: Track):
         # angle of the first section
-        starting_vector = track.lines[1] - track.lines[0]
+        starting_vector = track.lines[0] - track.lines[-1]
         starting_vector.normalize_ip()
         starting_rotation = Rotation(starting_vector[0], -starting_vector[1], starting_vector[1], starting_vector[0])
 
         self.car_type = car_type
         self.track = track
-        self.car_physics = CarPhysics(Transform(starting_rotation, deepcopy(track.lines[0])),
+        self.car_physics = CarPhysics(Transform(starting_rotation, deepcopy(track.lines[-1])),
                                       Vector2())
         self.round = 0
         self.next_waypoint = 0

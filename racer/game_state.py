@@ -69,7 +69,10 @@ class GameState:
     def ranked(self) -> List[Bot]:
         # Search for the car_info with the longest waypoint_timing
         bots = list(self.bots.keys())
-        bots.sort(
-            key=lambda bot: (self.bots[bot].round, self.bots[bot].next_waypoint, -self.bots[bot].waypoint_timing[-1]),
-            reverse=True)
+
+        def bot_distance(bot):
+            info = self.bots[bot]
+            return info.round, info.next_waypoint, -info.waypoint_timing[-1] if info.waypoint_timing else 0
+
+        bots.sort(key=bot_distance, reverse=True)
         return bots

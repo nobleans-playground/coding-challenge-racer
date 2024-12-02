@@ -124,9 +124,12 @@ class Window:
         fastest_bot = self.game_state.ranked()[0]
         for i, bot in enumerate(self.game_state.ranked()):
             car_info = self.game_state.bots[bot]
-            fastest_bot_time = self.game_state.bots[fastest_bot].waypoint_timing[len(car_info.waypoint_timing) - 1]
-            own_time = car_info.waypoint_timing[len(car_info.waypoint_timing) - 1]
-            behind = own_time - fastest_bot_time
+            if car_info.waypoint_timing:
+                fastest_bot_time = self.game_state.bots[fastest_bot].waypoint_timing[len(car_info.waypoint_timing) - 1]
+                own_time = car_info.waypoint_timing[len(car_info.waypoint_timing) - 1]
+                behind = own_time - fastest_bot_time
+            else:
+                behind = 0
 
             text = self.font.render(f'{bot.name} ({bot.contributor})', True, bot.color)
             self.window.blit(text, (self.window.get_width() - 300, offset_from_top + i * 20))
