@@ -12,7 +12,7 @@ from pygame.math import Vector2
 from pygame_widgets.button import Button
 from pygame_widgets.dropdown import Dropdown
 
-from .constants import framerate
+from .constants import framerate, rounds
 from .game_state import GameState
 from .linear_math import Transform
 from .track import Track
@@ -135,7 +135,10 @@ class Window:
             self.window.blit(text, (self.window.get_width() - 300, offset_from_top + i * 20))
 
             # Draw behind time
-            text = self.font.render(f'{behind:+.2f}', True, Color('white'))
+            if car_info.round >= rounds:
+                text = self.font.render(f'{car_info.waypoint_timing[-1]:.3f}', True, Color('white'))
+            else:
+                text = self.font.render(f'{behind:+.3f}', True, Color('white'))
             self.window.blit(text, (self.window.get_width() - 50, offset_from_top + i * 20))
 
     def selected_track(self):

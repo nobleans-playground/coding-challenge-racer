@@ -10,7 +10,7 @@ import pandas
 import pygame
 import tqdm
 
-from racer.constants import framerate, rounds
+from racer.constants import framerate, rounds, frames_after_finish
 from racer.game_state import GameState
 from racer.track import Track
 from racer.tracks import all_tracks
@@ -56,7 +56,6 @@ def main(track):
 
 def single_game(track):
     min_frames = 6000
-    frames_after_finish = 25_000
 
     game_state = GameState(track)
     finishing = False

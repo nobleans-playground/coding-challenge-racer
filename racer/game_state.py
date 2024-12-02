@@ -8,6 +8,7 @@ from .bots import all_bots
 from .car import Car
 from .car_info import CarInfo
 from .cars import car1
+from .constants import rounds
 from .track import Track
 
 
@@ -35,6 +36,9 @@ class GameState:
     def update(self, dt: float):
         self.frames += 1
         for bot, car_info in self.bots.items():
+            if car_info.round >= rounds:
+                continue
+
             result, cpu = self.get_bot_commands(bot, car_info)
 
             car_info.cpu += cpu
