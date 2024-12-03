@@ -28,20 +28,24 @@ all_bots = [
     DaBullet,
     Gonzales,
     ComplicatedBot,
-    ShadowFax,
+
     AutoSoori,
     ReinzorBot,
     DK,
     MatthijsRacer,
     FurStappen,
     Schummi,
-    RoadRunner,
+
     Racinator,
     Lombardi,
     PaulBot,
 
+    # Non competing bots
+    # RoadRunner,
+    # ShadowFax,
+
     # These bots are excluded because they use the unmodified default template
-    Lightyear,
-    LilRacer,
-    Bottas,
+    # Lightyear,
+    # LilRacer,
+    # Bottas,
 ]
