@@ -2,12 +2,11 @@ import os.path
 
 import pygame
 
-name = "Zandvoort circuit"
+name = "Zandvoort"
 background = pygame.image.load(os.path.splitext(__file__)[0] + '.webp')
 scale = 0.8
 track_width = 25
 lines = [
-    (639, 1565),
     (299, 1567),
     (213, 1550),
     (160, 1499),
@@ -75,4 +74,5 @@ lines = [
     (1537, 1542),
     (1390, 1564),
     (1255, 1565),
+    (639, 1565),
 ]
