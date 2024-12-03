@@ -19,17 +19,16 @@ from .daniel import Racinator
 from .gitplant import Lombardi
 
 all_bots = [
+    # Default bots
     KeyboardBot,
     SimpleBot,
+
+    # Player bots
     BrumBot,
     DaBullet,
-    Lightyear,
-    LilRacer,
-    Bottas,
     Gonzales,
     ComplicatedBot,
     ShadowFax,
-    PaulBot,
     AutoSoori,
     ReinzorBot,
     DK,
@@ -39,4 +38,10 @@ all_bots = [
     RoadRunner,
     Racinator,
     Lombardi,
+    PaulBot,
+
+    # These bots are excluded because they use the unmodified default template
+    Lightyear,
+    LilRacer,
+    Bottas,
 ]
