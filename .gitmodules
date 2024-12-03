@@ -55,3 +55,6 @@
 [submodule "racer/bots/gitplant"]
 	path = racer/bots/gitplant
 	url = git@github.com:Gitplant/racer-bot-lombardi.git
+[submodule "racer/bots/mhoogesteger"]
+	path = racer/bots/mhoogesteger
+	url = git@github.com:MHoogesteger/coding_challenge_racer.git

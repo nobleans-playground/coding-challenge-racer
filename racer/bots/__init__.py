@@ -17,6 +17,7 @@ from .ferry import FurStappen, Schummi
 from .rayman import RoadRunner
 from .daniel import Racinator
 from .gitplant import Lombardi
+from .mhoogesteger import SmoothSailing
 
 all_bots = [
     # Default bots
@@ -35,10 +36,10 @@ all_bots = [
     MatthijsRacer,
     FurStappen,
     Schummi,
-
     Racinator,
     Lombardi,
     PaulBot,
+    SmoothSailing,
 
     # Non competing bots
     # RoadRunner,
