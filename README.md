@@ -2,9 +2,28 @@
 
 ![Demo](./demo.gif)
 
+
+## Final rankings
+
+| Name            | Contributor    |  Imposter's circuit |  Evergreen Ridge | Zandvoort |  Total |
+|-----------------|----------------|--------------------:|-----------------:|----------:|-------:|
+| CaravanRacer    | Matthijs       |                  25 |               15 |        25 |     65 |
+| Gonzales        | Lewie          |                  18 |               18 |        12 |     48 |
+| Schummi         | Ferry          |                  15 |               25 |           |     40 |
+| Lombardi        | Gitplant       |                   1 |                6 |        18 |     25 |
+| BrumBot         | Brum           |                  12 |               12 |           |     24 |
+| reinzor         | Rein           |                   6 |                8 |        10 |     24 |
+| Racinator       | Daniel         |                   4 |                4 |        15 |     23 |
+| DK              | Jerrel         |                  10 |               10 |         2 |     22 |
+| FurStappen      | Ferry          |                   8 |                2 |           |     10 |
+| AutoSoori       | Mukunda        |                     |                1 |         6 |      7 |
+| ComplicatedBot  | Mahmoud        |                     |                  |         4 |      4 |
+| DaBullet        | MeltedPianoMan |                   2 |                  |         1 |      3 |
+| ReverseEngineer | Paul           |                     |                  |           |      0 |
+
 ## Current rankings
 
-## Imposter's circuit
+### Imposter's circuit
 
 | Name            | Contributor    | Finish time |  Speed | CPU | CPU/t |
 |-----------------|----------------|------------:|-------:|----:|------:|
@@ -29,7 +48,7 @@
 | ReverseEngineer | Paul           |     422.233 |  52.49 | 0.9 |   0.0 |
 | Player 1        | Nobleo         |         NaN |    NaN | 1.0 |   0.0 |
 
-## Evergreen Ridge
+### Evergreen Ridge
 
 | Name            | Contributor    | Finish time |  Speed | CPU | CPU/t |
 |-----------------|----------------|------------:|-------:|----:|------:|
