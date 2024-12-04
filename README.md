@@ -3,7 +3,16 @@
 ![Demo](./demo.gif)
 
 
-## Final rankings
+## Tournament results
+
+The main tournament is over.
+The winner is Matthijs with his bot CaravanRacer.
+Congratulations!
+The results can be found in the table below.
+
+The winner of the benchmark tracks was Bram with his bot BrumBot.
+Rancinerator won the prize of the most efficient bot because he only used 33 lines of code.
+Rinus won a price for most creative bot because he successfully circumvented the rules by abusing the game's physics engine.
 
 | Name            | Contributor    |  Imposter's circuit |  Evergreen Ridge | Zandvoort |  Total |
 |-----------------|----------------|--------------------:|-----------------:|----------:|-------:|
