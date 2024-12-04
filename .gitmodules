@@ -58,3 +58,6 @@
 [submodule "racer/bots/mhoogesteger"]
 	path = racer/bots/mhoogesteger
 	url = git@github.com:MHoogesteger/coding_challenge_racer.git
+[submodule "racer/bots/niekdt"]
+	path = racer/bots/niekdt
+	url = git@github.com:niekdt/coding-challenge-racer-bot.git

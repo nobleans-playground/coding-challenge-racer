@@ -1,23 +1,20 @@
-from .example import SimpleBot
-from .keyboard_bot import KeyboardBot
 from .bram import BrumBot
+from .daniel import Racinator
+from .example import SimpleBot
+from .ferry import FurStappen, Schummi
+from .gitplant import Lombardi
+from .hein import ShadowFax
 from .ivo import DaBullet
-from .jono import Lightyear
-from .richard import LilRacer
-from .stefan import Bottas
+from .jerrel import DK
+from .keyboard_bot import KeyboardBot
 from .lewie import Gonzales
 from .mahmoud import ComplicatedBot
-from .hein import ShadowFax
-from .paul import PaulBot
-from .mukunda import AutoSoori
-from .rein.bot import ReinzorBot
-from .jerrel import DK
 from .matthijsfh import MatthijsRacer
-from .ferry import FurStappen, Schummi
+from .mukunda import AutoSoori
+from .niekdt import MinVerstappen
+from .paul import PaulBot
 from .rayman import RoadRunner
-from .daniel import Racinator
-from .gitplant import Lombardi
-from .mhoogesteger import SmoothSailing, PedaltotheMetal
+from .rein.bot import ReinzorBot
 
 all_bots = [
     # Default bots
@@ -29,7 +26,6 @@ all_bots = [
     DaBullet,
     Gonzales,
     ComplicatedBot,
-
     AutoSoori,
     ReinzorBot,
     DK,
@@ -39,10 +35,9 @@ all_bots = [
     Racinator,
     Lombardi,
     PaulBot,
-
-    # Non competing bots
-    # RoadRunner,
-    # ShadowFax,
+    RoadRunner,
+    ShadowFax,
+    MinVerstappen,
 
     # These bots are excluded because they use the unmodified default template
     # Lightyear,
