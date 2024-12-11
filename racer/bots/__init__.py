@@ -13,7 +13,7 @@ from .matthijsfh import MatthijsRacer
 from .mukunda import AutoSoori
 from .niekdt import MinVerstappen
 from .paul import PaulBot
-from .rayman import RoadRunner
+from .rayman import RoadRunner, RoadSprinter
 from .rein.bot import ReinzorBot
 
 all_bots = [
@@ -38,6 +38,7 @@ all_bots = [
     RoadRunner,
     ShadowFax,
     MinVerstappen,
+    RoadSprinter,
 
     # These bots are excluded because they use the unmodified default template
     # Lightyear,
