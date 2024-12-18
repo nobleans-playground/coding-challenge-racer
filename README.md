@@ -2,34 +2,6 @@
 
 ![Demo](./demo.gif)
 
-
-## Tournament results
-
-The main tournament is over.
-The winner is Matthijs with his bot CaravanRacer.
-Congratulations!
-The results can be found in the table below.
-
-The winner of the benchmark tracks was Bram with his bot BrumBot.
-Rancinerator won the prize of the most efficient bot because he only used 33 lines of code.
-Rinus won a price for most creative bot because he successfully circumvented the rules by abusing the game's physics engine.
-
-| Name            | Contributor    |  Imposter's circuit |  Evergreen Ridge | Zandvoort |  Total |
-|-----------------|----------------|--------------------:|-----------------:|----------:|-------:|
-| CaravanRacer    | Matthijs       |                  25 |               15 |        25 |     65 |
-| Gonzales        | Lewie          |                  18 |               18 |        12 |     48 |
-| Schummi         | Ferry          |                  15 |               25 |           |     40 |
-| Lombardi        | Gitplant       |                   1 |                6 |        18 |     25 |
-| BrumBot         | Brum           |                  12 |               12 |           |     24 |
-| reinzor         | Rein           |                   6 |                8 |        10 |     24 |
-| Racinator       | Daniel         |                   4 |                4 |        15 |     23 |
-| DK              | Jerrel         |                  10 |               10 |         2 |     22 |
-| FurStappen      | Ferry          |                   8 |                2 |           |     10 |
-| AutoSoori       | Mukunda        |                     |                1 |         6 |      7 |
-| ComplicatedBot  | Mahmoud        |                     |                  |         4 |      4 |
-| DaBullet        | MeltedPianoMan |                   2 |                  |         1 |      3 |
-| ReverseEngineer | Paul           |                     |                  |           |      0 |
-
 ## Current rankings
 
 ### Imposter's circuit
@@ -143,9 +115,11 @@ You can follow the following steps to create your own bot.
 2. Create a personal repository where your bot will live.
    You can do this by clicking the "Use this template" button in [this repo](https://github.com/nobleans-playground/coding-challenge-racer-bot-template), or by forking the repository.
 3. Give your bot a name and add your own name as contributor
-4. Notify an organizer @nobleans-playground or @heinwessels to add your bot to the challenge as a submodule in the main repository.
+4. Notify an organizer (@Rayman) by creating a GitHub issue or send me an email. 
+   Then I'll add your bot to the challenge as a submodule in the main repository.
 
-_Note: Your bot doesn't have to be complete to be added, it simply needs to run and return a valid move. You can update/change/refactor your bot at any point during the challenge._
+_Note: Your bot doesn't have to be complete to be added, it simply needs to run and return a valid input.
+You can update/change/refactor your bot at any point during the challenge._
 
 ## How to start developing a bot
 
