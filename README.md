@@ -115,7 +115,7 @@ You can follow the following steps to create your own bot.
 2. Create a personal repository where your bot will live.
    You can do this by clicking the "Use this template" button in [this repo](https://github.com/nobleans-playground/coding-challenge-racer-bot-template), or by forking the repository.
 3. Give your bot a name and add your own name as contributor
-4. Notify an organizer (@Rayman) by creating a GitHub issue or send me an email. 
+4. Notify an organizer ([@Rayman](https://github.com/rayman)) by creating a GitHub issue or send me an email.
    Then I'll add your bot to the challenge as a submodule in the main repository.
 
 _Note: Your bot doesn't have to be complete to be added, it simply needs to run and return a valid input.
