@@ -10,4 +10,4 @@ WORKDIR /root/coding-challenge-racer
 
 COPY --link . .
 
-ENTRYPOINT [ "python3", "tournament.py", "Zandvoort"]
+ENTRYPOINT [ "python3", "main.py", "Zandvoort"]
