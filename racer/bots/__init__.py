@@ -8,6 +8,7 @@ from .ivo import DaBullet
 from .jerrel import DK
 from .keyboard_bot import KeyboardBot
 from .lewie import Gonzales
+from .loyvanbeek import Yol0
 from .mahmoud import ComplicatedBot
 from .matthijsfh import MatthijsRacer
 from .mukunda import AutoSoori
@@ -44,6 +45,7 @@ all_bots = [
     # Lightyear,
     # LilRacer,
     # Bottas,
+    # Yol0,
 
     # Banned for cheating
     # SmoothSailing,
