@@ -61,3 +61,6 @@
 [submodule "racer/bots/niekdt"]
 	path = racer/bots/niekdt
 	url = git@github.com:niekdt/coding-challenge-racer-bot.git
+[submodule "racer/bots/loyvanbeek"]
+	path = racer/bots/loyvanbeek
+	url = git@github.com:LoyVanBeek/yol0-racer.git
