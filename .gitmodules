@@ -64,3 +64,6 @@
 [submodule "racer/bots/loyvanbeek"]
 	path = racer/bots/loyvanbeek
 	url = git@github.com:LoyVanBeek/yol0-racer.git
+[submodule "racer/bots/hoang"]
+	path = racer/bots/hoang
+	url = git@github.com:HoangfDungx/hoang.git

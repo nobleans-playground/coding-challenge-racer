@@ -16,6 +16,7 @@ from .mukunda import AutoSoori
 from .paul import PaulBot
 from .rayman import RoadRunner, RoadSprinter
 from .rein.bot import ReinzorBot
+from .hoang import VietRacer
 
 all_bots = [
     # Default bots
@@ -40,6 +41,7 @@ all_bots = [
     ShadowFax,
     # MinVerstappen,  # Throws a massive stack trace from physics.py line 80: TypeError: descriptor 'from_polar' for 'pygame.math.Vector2' objects doesn't apply to a 'tuple' object
     RoadSprinter,
+    VietRacer,
 
     # These bots are excluded because they use the unmodified default template
     # Lightyear,
