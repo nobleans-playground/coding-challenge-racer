@@ -1,5 +1,6 @@
 from .bram import BrumBot
 from .daniel import Racinator
+from .emile import EmilioRomagno
 from .example import SimpleBot
 from .ferry import FurStappen, Schummi
 from .gitplant import Lombardi
@@ -31,6 +32,7 @@ all_bots = [
     AutoSoori,
     ReinzorBot,
     DK,
+    EmilioRomagno,
     MatthijsRacer,
     FurStappen,
     Schummi,

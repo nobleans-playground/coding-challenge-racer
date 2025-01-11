@@ -67,3 +67,6 @@
 [submodule "racer/bots/hoang"]
 	path = racer/bots/hoang
 	url = git@github.com:HoangfDungx/hoang.git
+[submodule "racer/bots/emile"]
+	path = racer/bots/emile
+	url = https://github.com/e-lime/EmilioRomagno
